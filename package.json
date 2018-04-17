@@ -1,42 +1,22 @@
 {
-    "title": "Heroic Features",
-    "name": "startbootstrap-heroic-features",
-    "version": "4.0.0",
-    "description": "An HTML template with a hero heading and feature cards built with Bootstrap",
-    "keywords": [
-        "css",
-        "sass",
-        "html",
-        "responsive",
-        "theme",
-        "template"
-    ],
-    "homepage": "https://startbootstrap.com/template-overviews/heroic-features",
-    "bugs": {
-        "url": "https://github.com/BlackrockDigital/startbootstrap-heroic-features/issues",
-        "email": "feedback@startbootstrap.com"
-    },
-    "license": "MIT",
-    "author": "Start Bootstrap",
-    "contributors": [
-        "David Miller (http://davidmiller.io/)"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/BlackrockDigital/startbootstrap-heroic-features.git"
-    },
-    "dependencies": {
-        "bootstrap": "4.0.0",
-        "jquery": "3.3.1",
-        "save": "^2.3.2"
-    },
-    "devDependencies": {
-        "body-parser": "latest",
-        "browser-sync": "2.23.6",
-        "consolidate": "latest",
-        "express": "latest",
-        "gulp": "^3.9.1",
-        "hogan": "latest",
-        "https": "latest"
-    }
+  "name": "blockchain_explorer_latest_aarthi",
+  "version": "1.0.0",
+  "description": "Ethos.io Block Explorer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "consolidate": "^0.15.1",
+    "express": "^4.16.3",
+    "hogan": "^1.0.2",
+    "hogan.js": "^3.0.2",
+    "https": "^1.0.0",
+    "mustache": "^2.3.0",
+    "save": "^2.3.2"
+  }
 }

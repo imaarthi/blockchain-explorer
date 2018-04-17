@@ -10,11 +10,12 @@ var etherScanToken = "JGSQ6DWADX27BD2FQ7ZT6NTP2TVDCI7CZS";
 
 // copied from asignment page on website
 app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
-app.set('views', './'); // tell Express where to find templates, in this case the '/templates' directory
+app.set('views', './templates'); // tell Express where to find templates, in this case the '/templates' directory
 app.set('view engine', 'html'); //register .html extension as template engine so we can render .html pages 
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // For minutes and seconds, add an extra 0, if value is < 10, for proper format
 function getTwoDigits(val) {
@@ -40,21 +41,19 @@ function getReadableTime(epoch) {
 
 
 function formatEtherStats(msgs) {
-	console.log('msgs:' + Object.keys(msgs));
-	console.log('msgs:' + Object.values(msgs));
-  var formatted;
+  var formatted = [];
  
- msgs = Object.values(msgs);
-
-    var formatted = {
+   msgs = Object.values(msgs);
+   
+    var tmp = {
       "ethbtc": msgs[0],
       "ethbtc_timestamp" : getReadableTime(msgs[1]),
       "ethusd" : msgs[2],
       "ethusd_timestamp": getReadableTime(msgs[3])
   	};
-    
-   // formatted.push(tmp);
+    formatted.push(tmp);
   
+    
   console.log("formatted:" + formatted);
   return formatted;
 }
@@ -69,18 +68,24 @@ function getHomePageStats(response) {
 		  });
 	  res.on("end", () => {
 	    msgs = JSON.parse(msgs);
-	    console.log(msgs);
-	   // console.log(msgs.result);
+
+	    console.log(msgs.result);
 	    msgs = formatEtherStats(msgs.result);
+      console.log("Rendering index.html");
 	   response.render('index.html', {"msgs": msgs } );
   		});
-	  //response.render('index.html', {"msgs": msgs } );
+
 	});
 }
 
 app.get('/', function(req, response) {
 	getHomePageStats(response);
-   // response.render('index.html', {"stats": stats } );
+
+});
+
+app.post('/enter', function(req, response) {
+    console.log("App post enter");
+    getHomePageStats(response);
 });
 
 
