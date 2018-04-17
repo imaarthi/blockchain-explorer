@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  
   <head>
     <link rel="shortcut icon" type="images/images/ethos_logo.png" href="images/ethos_logo.png" />
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
     <title>Ethos.io Blockchain Explorer</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     <!-- Custom styles for this template -->
@@ -20,6 +20,7 @@
   </head>
 
   <body>
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -51,6 +52,21 @@
         </div>
       </div>
     </nav>
+
+
+    <!-- Aarthi testing -->
+     <div class="window">
+        <ul>
+          {{#msgs}}
+
+          <li><b> ethbtc:</b> {{ ethbtc }} &nbsp; <b>ethbtc_timestamp:</b> {{ ethbtc_timestamp }}&nbsp;..........&nbsp;<b>ethusd:</b> {{ ethusd }}  &nbsp; <b>ethusd_timestamp:</b> {{ ethusd_timestamp }}  </li>
+
+          {{/msgs}}
+        </ul>
+
+      </div>
+
+    <!-- Aarthi testing -->
 
     <!-- Page Content -->
     <div class="container">
@@ -159,7 +175,24 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+        $(document).ready(function(){
+        
+            $.ajax({
+                  method: 'GET',
+                  url: "/enter",
+                  dataType: 'json',
 
+                  success: (data) => {
+                    console.log("success: data received as:" + data);
+                    
+                    if(data == null) {
+                      console.log("Data received is null");
+                    }
+                }
+            });
+
+        
+      });
 
     </script>
   </body>
