@@ -68,6 +68,14 @@
 
     <!-- Page Content -->
     <div class="container">
+
+      <!-- TxHash, BlockNo , txDate , From , To , Quantity -->
+      <ul>
+        {{#txns}}
+          <li>{{ TxHash }}  {{ BlockNo }} {{ txDate }} </li>
+
+        {{/txns}}
+      </ul>
     <table id="table">
     <thead>
         <tr>
