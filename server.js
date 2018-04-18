@@ -110,9 +110,9 @@ function createTables() {
     console.log("Unable to drop table transactions");
   })
 
-  pool.query('CREATE TABLE IF NOT EXISTS transactions(TxHash TEXT PRIMARY KEY, BlockNo TEXT, UnixTimestamp TEXT, TxDate TEXT, From TEXT, To TEXT, Quantity TEXT)', function(error, data){
+  pool.query('CREATE TABLE IF NOT EXISTS transactions(TxHash TEXT PRIMARY KEY, BlockNo TEXT, UnixTimestamp TEXT, TxDate TEXT, FromBlock TEXT, ToBlock TEXT, Quantity TEXT)', function(error, data){
       if(error) {
-        console.log("Unable to createTables");
+        console.log("Error:" +error);
       }
   })
 }
@@ -125,7 +125,7 @@ function formattedTxns(txns) {
           "BlockNo": txns[1],
           "UnixTimestamp": txns[2],
           "txDate": txns[3],
-          "From": txns[4],
+          "FromBlock": txns[4],
           "To": txns[5],
           "Quantity": txns[6]
     }
@@ -139,11 +139,11 @@ function formattedTxns(txns) {
 
 app.get('/transactions', getTxns);
 function getTxns(request, response) {
-  var sql = 'SELECT TxHash, BlockNo , txDate , From , To , Quantity FROM transactions';
+  var sql = 'SELECT TxHash, BlockNo , txDate , FromBlock , ToBlock , Quantity FROM transactions';
 
   pool.query(sql, function(error, result){
       if(error) {
-        console.log("");
+        console.log("Error: " +error);
       }else {
         var txns = result.rows;
         txns = formattedTxns(txns);
@@ -157,7 +157,7 @@ function getTxns(request, response) {
 
 function insertDB(TxHash, BlockNo , UnixTimestamp , txDate , From , To , Quantity ){
 
-   pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , From , To , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)', [TxHash, BlockNo , UnixTimestamp , txDate , From , To , Quantity],  function(error, data){
+   pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)', [TxHash, BlockNo , UnixTimestamp , txDate , FromBlock , ToBlock , Quantity],  function(error, data){
       if(error) {
         console.log(error);
       }
@@ -174,7 +174,13 @@ function readTxnsDataAndInsertInDB() {
     for (var i = 0; i < data.length; i++) {
       //console.log(data[i][0])
 
-          insertDB(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]);
+pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)',
+      [data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]],  function(error, data){
+      if(error) {
+        console.log(error);
+      }
+  })
+       //   insertDB(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]);
         
           // "TxHash": data[index][0],
           // "BlockNo": data[index][1],
