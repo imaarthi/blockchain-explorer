@@ -40,7 +40,11 @@ header {
     border: 1px solid #21ceab !important;
 }
 
-                
+ul {
+  list-style-type: none;
+  text-decoration: bold;
+}                
+
 #bottomfooter {
   position: fixed;
   max-height: 40px;
