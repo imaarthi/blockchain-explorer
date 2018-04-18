@@ -146,12 +146,28 @@ function getTxns(request, response) {
         console.log("Error: " +error);
       }else {
         var txns = result.rows;
-        txns = formattedTxns(txns);
+        //txns = formattedTxns(txns);
         console.log("Rendering transactions.html");
+        console.log(txns);
         response.render('transactions.html', { "txns": txns });
       }
   })
 
+}
+
+app.get('/tokens', getTokens);
+function getTokens(request, response) {
+  response.render('tokens.html');
+}
+
+app.get('/blocks', getBlocks);
+function getBlocks(request, response) {
+  response.render('blocks.html');
+}
+
+app.get('/contracts', getContracts);
+function getContracts(request, response) {
+  response.render('contracts.html');
 }
 
 
