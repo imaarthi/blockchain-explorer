@@ -8,6 +8,13 @@
     <meta name="description" content="Blockchain Explorer">
     <meta name="author" content="">
 
+
+    <meta name="ethbtc" content="{{ ethbtc }}">
+    <meta name="ethbtc_timestamp" content="{{ ethbtc_timestamp }}">
+    <meta name="ethusd" content="{{ ethusd }}">
+    <meta name="ethusd_timestamp" content="{{ ethusd_timestamp }}">
+
+
     <title>Ethos.io Blockchain Explorer</title>
 
      <!-- Bootstrap CSS -->
@@ -44,7 +51,7 @@ h3 {
 }
 
 header {
-  margin-top: 50px;
+  margin: 0 auto;
 }
 
 .btn-primary:hover {
@@ -67,6 +74,7 @@ ul {
   list-style-type: none;
   text-decoration: bold;
 }                
+
 
 #bottomfooter {
  /* height: -60px;
@@ -194,26 +202,26 @@ ul {
 
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="card">
-            <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+            <img class="card-img-top" src="./images/ethbtc2.jpg" alt="">
             <div class="card-body">
-              <h4 class="card-title">Difficulty</h4>
-              <p class="card-text">placeholder</p>
+              <h4 class="card-title">Ethbtc</h4>
+              <p class="card-text" id="card2">placeholder</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Learn More!</a>
+              <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="card">
-            <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+            <img class="card-img-top" src="./images/ethusd1.png" alt="">
             <div class="card-body">
-              <h4 class="card-title">Block time</h4>
-              <p class="card-text">placeholder</p>
+              <h4 class="card-title">Ethusd</h4>
+              <p class="card-text" id="card3">placeholder</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Learn More!</a>
+              <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a>
             </div>
           </div>
         </div>
@@ -223,7 +231,7 @@ ul {
             <img class="card-img-top" src="http://placehold.it/500x325" alt="">
             <div class="card-body">
               <h4 class="card-title">Hash rate</h4>
-              <p class="card-text">place holder</p>
+              <p class="card-text" id="card4">place holder</p>
             </div>
             <div class="card-footer">
               <a href="#" class="btn btn-primary">Learn More!</a>
@@ -262,8 +270,21 @@ ul {
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
     <script>
+            function meta(name) {
+              var tag = document.querySelector('meta[name=' + name + ']');
+              if (tag != null)
+                  return tag.content;
+              return '';
+        }
+
         $(document).ready(function(){
             console.log("Document is ready!");
+            document.getElementById("card2").innerHTML= "Eth / btc: " + meta('ethbtc') + "\n  \n" +
+              meta('ethbtc_timestamp');
+
+              document.getElementById("card3").innerHTML="Eth / USD: " + meta('ethusd') + "\n \n" +
+              meta('ethusd_timestamp');
+
             $("#submit").click(function(e){
             $.ajax({
                   method: 'POST',

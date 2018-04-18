@@ -43,7 +43,7 @@ function getReadableTime(epoch) {
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];  
     var date = a.getDate() + '/' +months[a.getMonth()] +'/'+a.getFullYear();
     var time = a.getHours() + ":" + getTwoDigits(a.getMinutes()) + ":" + getTwoDigits(a.getSeconds());
-    var timestamp = date + '|' + time;
+    var timestamp = date + '  ' + time;
     console.log(timestamp);
     return timestamp;
 }
@@ -81,7 +81,14 @@ function getHomePageStats(response) {
 	    console.log(msgs.result);
 	    msgs = formatEtherStats(msgs.result);
       console.log("Rendering index.html");
-	   response.render('index.html', {"msgs": msgs } );
+	   // OLD: //response.render('index.html', {"msgs": msgs } );
+     console.log("CHECK");
+     console.log(msgs);
+     response.render('index.html', 
+          {"ethbtc": msgs[0].ethbtc,
+            "ethbtc_timestamp": msgs[0].ethbtc_timestamp,
+            "ethusd" : msgs[0].ethusd,
+      "ethusd_timestamp": msgs[0].ethusd_timestamp } );
   		});
 
 	});
