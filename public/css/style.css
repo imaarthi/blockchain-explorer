@@ -20,10 +20,10 @@ body {
 	background: linear-gradient(-180deg, #152a53 0%, #6C9Bf3 100%)  !important;
 }
 
-header {
+/*header {
   margin-top: 30px;
 }
-
+*/
 .btn-primary:hover {
   background-color: #8eb4fa !important;
   color: white !important;
@@ -43,9 +43,14 @@ header {
 ul {
   list-style-type: none;
   text-decoration: bold;
-}                
+}   
 
-#bottomfooter {
+.card-img-top {
+  height: 100px;
+}             
+
+/*#bottomfooter {
   position: fixed;
-  max-height: 40px;
+  width: 100%;
 }
+*/
