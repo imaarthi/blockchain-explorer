@@ -21,12 +21,6 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 
-        
-<!--     <!--script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.js"></script>
-     <link href="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.css" rel="stylesheet"> 
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"-->
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" type="text/html" rel="stylesheet">
@@ -93,7 +87,7 @@ ul {
     display: flex;
     justify-content: center;
     align-content: center;
-    position: absolute;
+    position: fixed;
       right: 0;
       bottom: 0;
       left: 0;
@@ -103,6 +97,20 @@ ul {
     text-decoration: none;
 }
  
+ #table {
+  margin-top: 90px;
+
+ }
+
+ th {
+    background-color: #8eb4fa;
+/*  border: 2px solid black;*/
+ }
+
+ tr {
+  background-color: #e8f5fe;
+
+ }
 
     </style>
   </head>
@@ -166,16 +174,12 @@ ul {
       
         <a href="mailto:shingo@ethos.io" class="author-social" ><i class="fas fa-envelope"></i></a> 
         &nbsp;&nbsp;
-
-
-</p>
+        </p>
       </div>
       <!-- /.container -->
     </footer>
 
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
- //    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
- //    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
+
 
      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -188,29 +192,13 @@ ul {
 * Sends a request to API to get tokens.
 */
 
-var data = [ 
-        {
-               "token": "1",
-              "price": "10",
-              "percent_change": "hghj",
-              "market_cap": "$" + "hjghj"
-          },
-           {
-               "token": "1",
-              "price": "10",
-              "percent_change": "hghj",
-              "market_cap": "$" + "hjghj"
-          }
-];
-
-
  // Aarthi:
  // Client should send request to server, server should get this information from
  // url below and pass on the data to server.
 
   $.ajax({
     type: "GET",
-    url: 'https://api.coinmarketcap.com/v1/ticker/?start=100&limit=10',
+    url: 'https://api.coinmarketcap.com/v1/ticker/?start=100&limit=15',
     dataType: "json",
 
   success: function(response){
