@@ -187,7 +187,7 @@ function readTxnsDataAndInsertInDB() {
 
   var txFile = "./txns.csv";
   csv_obj.from.path(txFile).to.array(function (data) {
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 1; i < data.length; i++) {
       //console.log(data[i][0])
 
 pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)',
@@ -196,22 +196,10 @@ pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , 
         console.log(error);
       }
   })
-       //   insertDB(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]);
-        
-          // "TxHash": data[index][0],
-          // "BlockNo": data[index][1],
-          // "UnixTimestamp": data[index][2],
-          // "txDate": data[index][3],
-          // "From": data[index][4],
-          // "To": data[index][5],
-          // "Quantity": data[index][6]
-        
-
-       
+     
     }
     
-   // console.log(data1);
-    //return data1;
+
 });
 
 
