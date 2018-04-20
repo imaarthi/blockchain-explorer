@@ -8,12 +8,7 @@
     <meta name="description" content="Blockchain Explorer">
     <meta name="author" content="">
 
-
-    <meta name="ethbtc" content="{{ ethbtc }}">
-    <meta name="ethbtc_timestamp" content="{{ ethbtc_timestamp }}">
-    <meta name="ethusd" content="{{ ethusd }}">
-    <meta name="ethusd_timestamp" content="{{ ethusd_timestamp }}">
-
+    <meta name="searchResults" content="{{ searchResults }}">
 
     <title>Ethos.io Blockchain Explorer</title>
 
@@ -151,12 +146,22 @@ ul {
 
               <!-- Aarthi testing -->
      
-        <ul>
-          {{#msgs}}
+        <ul id="searchResults">
+             {{#searchResults}}
+          <li>
+              <div id="searchBlockDiv">
+                <br/>
+                <b> TxHash&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ hash }} <br/>
+                 <b> BlockNo&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ height }} <br/>
+                  <b> FromBlock&nbsp;: &nbsp;&nbsp; </b> {{ total }} <br/>
+                   <b> ToBlock&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ fees }} <br/>
+                    <b> Quantity&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ size }} <br/>
 
-          <li><b> ethbtc:</b> {{ ethbtc }} &nbsp; <b>ethbtc_timestamp:</b> {{ ethbtc_timestamp }}&nbsp;..........&nbsp;<b>ethusd:</b> {{ ethusd }}  &nbsp; <b>ethusd_timestamp:</b> {{ ethusd_timestamp }}  </li>
+              
+              </div>
+          </li>
 
-          {{/msgs}}
+        {{/searchResults}}
         </ul>
 
       
@@ -171,7 +176,7 @@ ul {
          
 
 
-      <div class="input-group md-form form-sm form-2 pl-0">
+      <!-- <div class="input-group md-form form-sm form-2 pl-0">
           <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search by Address, TxHash, Block, Token, Contract" aria-label="Search" id="searchtextbox">
           <div class="input-group-append">
                <button type="button" class="btn btn-info" id="searchbutton">
@@ -181,16 +186,16 @@ ul {
           </div>
 
           
-      </div>
+      </div> -->
                 
 
         <!--- END -->
       </header>
 
       <!-- Page Features -->
-      <div class="row text-center">
+      <div class="row text-center" id="result">
 
-        <div class="col-lg-3 col-md-6 mb-4">
+      <!--   <div class="col-lg-3 col-md-6 mb-4">
           <div class="card">
             <img class="card-img-top" src="./images/globe2.jpg" alt="">
             <div class="card-body">
@@ -240,7 +245,7 @@ ul {
               <a href="#" class="btn btn-primary">Learn More!</a>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
       <!-- /.row -->
@@ -280,65 +285,70 @@ ul {
               return '';
         }
 
-        function handleSearch() {
-            var input = $('#searchtextbox').val();
-            console.log("User searching for:" +input);
-               $.ajax({
-                  method: 'POST',
-                  url: "/search/" + input,
-                  // dataType: 'json',
-                  success: (data) => {
-                    console.log("success");
-                    window.location = "http://localhost:8080/" + 'search';
-                    if(data == null) {
-                      console.log("Data received is null");
-                    }
-                  },
-                  error: (data) => {
-                    console.log("error");
-                    if(data == null) {
-                      console.log("Data received is null");
-                    }
-                  }
-            });
-        }
-
-        $('#searchbutton').on('click', handleSearch);
+        console.log(meta('searchResults'));
+        
+         document.getElementById("result").innerHTML= "Here are your results:" + '\n' + meta('searchResults');
 
 
+        // function handleSearch() {
+        //     var input = $('#searchtextbox').val();
+        //     console.log("User searching for:" +input);
+        //        $.ajax({
+        //           method: 'POST',
+        //           url: "/search/" + input,
+        //           // dataType: 'json',
+        //           success: (data) => {
+        //             console.log("success: data received as:" + data);
+                    
+        //             if(data == null) {
+        //               console.log("Data received is null");
+        //             }
+        //           },
+        //           error: (data) => {
+        //             console.log("error");
+        //             if(data == null) {
+        //               console.log("Data received is null");
+        //             }
+        //           }
+        //     });
+        // }
 
-        $(document).ready(function(){
-            console.log("Document is ready!");
-            document.getElementById("card2").innerHTML= "Eth / btc: " + meta('ethbtc') + "\n  \n" +
-              meta('ethbtc_timestamp');
+        // $('#searchbutton').on('click', handleSearch);
 
-              document.getElementById("card3").innerHTML="Eth / USD: " + meta('ethusd') + "\n \n" +
-              meta('ethusd_timestamp');
 
-            $("#submit").click(function(e){
-                      $.ajax({
-                            method: 'POST',
-                            url: "/enter",
-                            dataType: 'json',
 
-                            success: (data) => {
-                              console.log("success");
+      //   $(document).ready(function(){
+      //       console.log("Document is ready!");
+      //       document.getElementById("card2").innerHTML= "Eth / btc: " + meta('ethbtc') + "\n  \n" +
+      //         meta('ethbtc_timestamp');
+
+      //         document.getElementById("card3").innerHTML="Eth / USD: " + meta('ethusd') + "\n \n" +
+      //         meta('ethusd_timestamp');
+
+      //       $("#submit").click(function(e){
+      //                 $.ajax({
+      //                       method: 'POST',
+      //                       url: "/enter",
+      //                       dataType: 'json',
+
+      //                       success: (data) => {
+      //                         console.log("success: data received as:" + data);
                               
-                              if(data == null) {
-                                console.log("Data received is null");
-                              }
-                            },
-                            error: (data) => {
-                              console.log("error");
-                              if(data == null) {
-                                console.log("Data received is null");
-                              }
-                            }
-                      });
-              });
+      //                         if(data == null) {
+      //                           console.log("Data received is null");
+      //                         }
+      //                       },
+      //                       error: (data) => {
+      //                         console.log("error");
+      //                         if(data == null) {
+      //                           console.log("Data received is null");
+      //                         }
+      //                       }
+      //                 });
+      //         });
 
         
-      });
+      // });
 
     </script>
   </body>

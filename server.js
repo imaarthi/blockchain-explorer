@@ -105,6 +105,51 @@ app.post('/enter', function(req, response) {
 });
 
 
+function searchBlock(searchText, response) {
+  var url = 'https://api.blockcypher.com/v1/eth/main/blocks/' + searchText;
+  console.log("url is:" + url);
+  https.get(url, res => {
+      res.setEncoding("utf8");
+      var msgs = "";
+      res.on("data", data => {
+        console.log("====RESULTS ON=====");
+        console.log(data);
+        msgs += data;
+      });
+    res.on("end", () => {
+      console.log("=====BLOCK DATA=====");
+
+      var searchResults = JSON.parse(msgs);
+
+      console.log("=====BLOCK DATA=====");
+      console.log(searchResults);
+
+       response.render('search.html', { "searchResults": searchResults });
+
+      
+      }); 
+   });
+}
+
+
+function handleError(response) {
+  response.status(404);
+  response.json("Error or No such information..!");
+}
+
+
+app.post('/search/:searchText', handleSearch);
+function handleSearch(request, response) {
+  var searchText = request.params.searchText;
+  console.log("Server received Search request: "+searchText);
+  searchBlock(searchText, response);
+  // if(output == null || output === undefined) {
+  //   handleError(response);
+  // }
+
+}
+
+
 function getEtherLastPrice() {
 	var json = http.get('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=' + etherScanToken);
 	console.log('result:' + json);
@@ -172,6 +217,11 @@ function getBlocks(request, response) {
   response.render('blocks.html');
 }
 
+app.get('/search', getSearchResult);
+function getSearchResult(request, response) {
+  response.render('search.html');
+}
+
 app.get('/contracts', getContracts);
 function getContracts(request, response) {
   response.render('contracts.html');
@@ -205,14 +255,8 @@ pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , 
   })
      
     }
-    
-
-});
-
-
-
+ });
 }
-
 
 
 console.log("Creating the Database and tables");
