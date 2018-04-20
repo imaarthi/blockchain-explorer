@@ -212,10 +212,10 @@ function getTokens(request, response) {
   response.render('tokens.html');
 }
 
-app.get('/blocks', getBlocks);
-function getBlocks(request, response) {
-  response.render('blocks.html');
-}
+// app.get('/blocks', getBlocks);
+// function getBlocks(request, response) {
+//   response.render('blocks.html');
+// }
 
 app.get('/search', getSearchResult);
 function getSearchResult(request, response) {
@@ -259,6 +259,43 @@ pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , 
 }
 
 
+app.get('/blocks', getBlocks);
+function getBlocks(request, response) {
+  var sql = null ;//TODO: your SQL query here 
+  pool.query(sql, function(error, result){
+      if(error) {
+        console.log("Error: " +error);
+      }else {
+        var blocks = result.rows;
+        //txns = formattedTxns(txns);
+        console.log("Rendering blocks.html");
+        console.log(blocks);
+        response.render('blocks.html', { "blocks": blocks });
+      }
+  })
+
+}
+
+
+function readBlocksDataAndInsertInDB() {
+  // TODO:
+  // Do API Call 100 times for each of 100 blocks separately
+  // and store it in Database.
+
+  // Example below:
+  
+ //  pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)',
+ //      [data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]],  function(error, data){
+ //      if(error) {
+ //        console.log(error);
+ //      }
+ //  })
+     
+ //    }
+ // });
+}
+
+
 console.log("Creating the Database and tables");
 createTables();
 console.log("Created tables");
@@ -267,6 +304,7 @@ console.log("Inserting transactions data into database");
 readTxnsDataAndInsertInDB();
 console.log("Inserted transactions data into database");
 
+readBlocksDataAndInsertInDB();
 
 // Server App listening 
 console.log("Server listening on Port: " +PORT);
