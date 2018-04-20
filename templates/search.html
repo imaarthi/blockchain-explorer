@@ -146,109 +146,38 @@ ul {
 
               <!-- Aarthi testing -->
      
-        <ul id="searchResults">
-             {{#searchResults}}
-          <li>
+        <ul id="searchResult">
+              {{#searchResults}}
+              <li>
               <div id="searchBlockDiv">
                 <br/>
-                <b> TxHash&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ hash }} <br/>
-                 <b> BlockNo&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ height }} <br/>
-                  <b> FromBlock&nbsp;: &nbsp;&nbsp; </b> {{ total }} <br/>
-                   <b> ToBlock&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ fees }} <br/>
-                    <b> Quantity&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ size }} <br/>
+                <b> Hash &nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ hash }} <br/>
+                 <b> Height&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ height }} <br/>
+                  <b> Total&nbsp;: &nbsp;&nbsp; </b> {{ total }} <br/>
+                   <b> Fees&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ fees }} <br/>
+                    <b> Size&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ size }} <br/>
+                        <b> Gas_limit&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ gas_limit }} <br/>
+                         <b> Gas_price&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ gas_price }} <br/>
+                          <b> Gas_used&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ gas_used }} <br/>
 
               
               </div>
-          </li>
+              </li>
 
-        {{/searchResults}}
+             {{/searchResults}}
         </ul>
 
       
 
-    <!-- Aarthi testing -->
-         <!-- <input type="button" id="submit" value="Refresh"><br/><br/> -->
         <p class="lead"></p>
       
 
-
-       <!--- START -->
-         
-
-
-      <!-- <div class="input-group md-form form-sm form-2 pl-0">
-          <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search by Address, TxHash, Block, Token, Contract" aria-label="Search" id="searchtextbox">
-          <div class="input-group-append">
-               <button type="button" class="btn btn-info" id="searchbutton">
-      <span class="fa fa-search"></span> Search
-    </button>
-
-          </div>
-
-          
-      </div> -->
-                
-
-        <!--- END -->
       </header>
 
       <!-- Page Features -->
       <div class="row text-center" id="result">
-
-      <!--   <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="./images/globe2.jpg" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Market Cap</h4>
-              <p class="card-text">$50.833 billion</p>
-            </div>
-            <div class="card-footer">
-              <a href="https://www.investopedia.com/articles/basics/03/031703.asp" class="btn btn-primary">Learn More!</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="./images/ethbtc2.jpg" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Ethbtc</h4>
-              <p class="card-text" id="card2">placeholder</p>
-            </div>
-            <div class="card-footer">
-              <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="./images/ethusd1.png" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Ethusd</h4>
-              <p class="card-text" id="card3">placeholder</p>
-            </div>
-            <div class="card-footer">
-              <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Hash rate</h4>
-              <p class="card-text" id="card4">place holder</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Learn More!</a>
-            </div>
-          </div>
-        </div> -->
-
       </div>
-      <!-- /.row -->
+      
 
     </div>
     <!-- /.container -->
@@ -285,70 +214,9 @@ ul {
               return '';
         }
 
-        console.log(meta('searchResults'));
-        
-         document.getElementById("result").innerHTML= "Here are your results:" + '\n' + meta('searchResults');
-
-
-        // function handleSearch() {
-        //     var input = $('#searchtextbox').val();
-        //     console.log("User searching for:" +input);
-        //        $.ajax({
-        //           method: 'POST',
-        //           url: "/search/" + input,
-        //           // dataType: 'json',
-        //           success: (data) => {
-        //             console.log("success: data received as:" + data);
-                    
-        //             if(data == null) {
-        //               console.log("Data received is null");
-        //             }
-        //           },
-        //           error: (data) => {
-        //             console.log("error");
-        //             if(data == null) {
-        //               console.log("Data received is null");
-        //             }
-        //           }
-        //     });
-        // }
-
-        // $('#searchbutton').on('click', handleSearch);
-
-
-
-      //   $(document).ready(function(){
-      //       console.log("Document is ready!");
-      //       document.getElementById("card2").innerHTML= "Eth / btc: " + meta('ethbtc') + "\n  \n" +
-      //         meta('ethbtc_timestamp');
-
-      //         document.getElementById("card3").innerHTML="Eth / USD: " + meta('ethusd') + "\n \n" +
-      //         meta('ethusd_timestamp');
-
-      //       $("#submit").click(function(e){
-      //                 $.ajax({
-      //                       method: 'POST',
-      //                       url: "/enter",
-      //                       dataType: 'json',
-
-      //                       success: (data) => {
-      //                         console.log("success: data received as:" + data);
-                              
-      //                         if(data == null) {
-      //                           console.log("Data received is null");
-      //                         }
-      //                       },
-      //                       error: (data) => {
-      //                         console.log("error");
-      //                         if(data == null) {
-      //                           console.log("Data received is null");
-      //                         }
-      //                       }
-      //                 });
-      //         });
-
-        
-      // });
+        var res = meta('searchResults');
+        console.log(res);
+        document.getElementById("result").innerHTML= JSON.stringify(res);
 
     </script>
   </body>

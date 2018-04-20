@@ -172,7 +172,13 @@ ul {
 
 
       <div class="input-group md-form form-sm form-2 pl-0">
-          <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search by Address, TxHash, Block, Token, Contract" aria-label="Search" id="searchtextbox">
+           <select class="searchid">
+            <option value="TxHash">TxHash</option>
+            <option value="Block">Block</option>
+            <option value="Address">Address</option>
+        </select>
+          <input class="form-control my-0 py-1 red-border" type="text" 
+          placeholder="Search by Address, TxHash, Block, Token, Contract" aria-label="Search" id="searchtextbox">
           <div class="input-group-append">
                <button type="button" class="btn btn-info" id="searchbutton">
       <span class="fa fa-search"></span> Search
@@ -281,11 +287,16 @@ ul {
         }
 
         function handleSearch() {
+           var what = $(".searchid option:selected").val();
+           console.log("what to search:" + what);
             var input = $('#searchtextbox').val();
-            console.log("User searching for:" +input);
-               $.ajax({
+            if(input == null || input === undefined || input == "") {
+              alert("Please enter a value to search for..!");
+            }else { 
+                console.log("User searching for:" +input);
+                $.ajax({
                   method: 'POST',
-                  url: "/search/" + input,
+                  url: "/search/" + input + "/" + what,
                   // dataType: 'json',
                   success: (data) => {
                     console.log("success");
@@ -300,7 +311,9 @@ ul {
                       console.log("Data received is null");
                     }
                   }
-            });
+                 });
+
+             }
         }
 
         $('#searchbutton').on('click', handleSearch);

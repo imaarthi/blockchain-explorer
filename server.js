@@ -12,6 +12,7 @@ var etherScanToken = "JGSQ6DWADX27BD2FQ7ZT6NTP2TVDCI7CZS";
 var db = require('any-db');
 var db_url = 'sqlite3://chaindata.db';
 var pool = db.createConnection(db_url);
+var globalSearchResults;
 
 // CSV parser
 var csv =  require('csv');
@@ -105,6 +106,7 @@ app.post('/enter', function(req, response) {
 });
 
 
+
 function searchBlock(searchText, response) {
   var url = 'https://api.blockcypher.com/v1/eth/main/blocks/' + searchText;
   console.log("url is:" + url);
@@ -123,7 +125,36 @@ function searchBlock(searchText, response) {
 
       console.log("=====BLOCK DATA=====");
       console.log(searchResults);
+      globalSearchResults = searchResults;
+       response.render('search.html', { "searchResults": searchResults });
 
+      
+      }); 
+   });
+}
+
+function searchByTxHash(searchText, response) {
+  var len = searchText.length;
+  var txn = searchText.slice(2,len);
+   var url = 'https://api.blockcypher.com/v1/eth/main/txs/' + txn;
+  console.log("url is:" + url);
+  console.log(searchText);
+  https.get(url, res => {
+      res.setEncoding("utf8");
+      var msgs = "";
+      res.on("data", data => {
+        console.log("====RESULTS ON=====");
+        console.log(data);
+        msgs += data;
+      });
+    res.on("end", () => {
+      console.log("=====TXN DATA=====");
+
+      var searchResults = JSON.parse(msgs);
+
+      console.log("=====TXN DATA=====");
+      console.log(searchResults);
+      globalSearchResults = searchResults;
        response.render('search.html', { "searchResults": searchResults });
 
       
@@ -132,21 +163,56 @@ function searchBlock(searchText, response) {
 }
 
 
+function searchByAddress(searchText, response) {
+//  var len = searchText.length;
+//  var txn = searchText.slice(2,len);
+   var url = 'https://api.blockcypher.com/v1/eth/main/addrs/' + searchText;
+  console.log("url is:" + url);
+  console.log(searchText);
+  https.get(url, res => {
+      res.setEncoding("utf8");
+      var msgs = "";
+      res.on("data", data => {
+        console.log("====RESULTS ON=====");
+        console.log(data);
+        msgs += data;
+      });
+    res.on("end", () => {
+      console.log("=====TXN DATA=====");
+
+      var searchResults = JSON.parse(msgs);
+
+      console.log("=====TXN DATA=====");
+      console.log(searchResults);
+      globalSearchResults = searchResults;
+       response.render('search.html', { "searchResults": searchResults });
+
+      
+      }); 
+   });
+}
+
+
+
 function handleError(response) {
   response.status(404);
   response.json("Error or No such information..!");
 }
 
 
-app.post('/search/:searchText', handleSearch);
+app.post('/search/:searchText/:searchWhat', handleSearch);
 function handleSearch(request, response) {
   var searchText = request.params.searchText;
   console.log("Server received Search request: "+searchText);
-  searchBlock(searchText, response);
-  // if(output == null || output === undefined) {
-  //   handleError(response);
-  // }
-
+  var searchWhat = request.params.searchWhat;
+  console.log("Server searchWhat: "+searchWhat);
+  if(searchWhat == "Block") {
+    searchBlock(searchText, response);
+  }else if(searchWhat == "TxHash") {
+    searchByTxHash(searchText, response);
+  }else {
+    searchByAddress(searchText, response);
+  }
 }
 
 
@@ -219,7 +285,7 @@ function getTokens(request, response) {
 
 app.get('/search', getSearchResult);
 function getSearchResult(request, response) {
-  response.render('search.html');
+  response.render('search.html',{ "searchResults": globalSearchResults });
 }
 
 app.get('/contracts', getContracts);
