@@ -69,6 +69,7 @@ function formatEtherStats(msgs) {
   return formatted;
 }
 
+
 function getHomePageStats(response) {
   var url = 'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=' + etherScanToken;
   https.get(url, res => {
@@ -86,15 +87,50 @@ function getHomePageStats(response) {
 	   // OLD: //response.render('index.html', {"msgs": msgs } );
      console.log("CHECK");
      console.log(msgs);
-     response.render('index.html', 
-          {"ethbtc": msgs[0].ethbtc,
-            "ethbtc_timestamp": msgs[0].ethbtc_timestamp,
-            "ethusd" : msgs[0].ethusd,
-      "ethusd_timestamp": msgs[0].ethusd_timestamp } );
+     // response.render('index.html', 
+     //      {"ethbtc": msgs[0].ethbtc,
+     //        "ethbtc_timestamp": msgs[0].ethbtc_timestamp,
+     //        "ethusd" : msgs[0].ethusd,
+     //  "ethusd_timestamp": msgs[0].ethusd_timestamp } );
+
+                var url = 'https://www.etherchain.org/api/basic_stats';
+                  https.get(url, res => {
+                      //res.setEncoding("utf8");
+                      var m = "";
+                      res.on("data", data => {
+                        m += data;
+                      });
+                    res.on("end", () => {
+                      m = JSON.parse(m);
+                      m = m.currentStats;
+
+                      console.log(m);
+                      console.log("Hashrate: " + m.hashrate);
+
+                     // m = formatEtherStats(msgs.result);
+                      console.log("Rendering index.html");
+                     // OLD: //response.render('index.html', {"msgs": msgs } );
+                     console.log("CHECK");
+                     console.log(m);
+                     response.render('index.html', 
+                          {"ethbtc": msgs[0].ethbtc,
+                            "ethbtc_timestamp": msgs[0].ethbtc_timestamp,
+                            "ethusd" : msgs[0].ethusd,
+                      "ethusd_timestamp": msgs[0].ethusd_timestamp,
+                        "hashrate": m.hashrate,
+                        "difficulty": m.difficulty,
+                        "blocktime": m.block_time,
+                        "unclerate": m.uncle_rate } );
+
+                                    
+                      });
+
+                  });     
   		});
 
 	});
 }
+
 
 app.get('/', function(req, response) {
 	getHomePageStats(response);
@@ -164,36 +200,6 @@ function searchByTxHash(searchText, response) {
 }
 
 
-// function searchByAddress(searchText, response) {
-// //  var len = searchText.length;
-// //  var txn = searchText.slice(2,len);
-//    var url = 'https://api.blockcypher.com/v1/eth/main/addrs/' + searchText;
-//   console.log("url is:" + url);
-//   console.log(searchText);
-//   https.get(url, res => {
-//       res.setEncoding("utf8");
-//       var msgs = "";
-//       res.on("data", data => {
-//         console.log("====RESULTS ON=====");
-//         console.log(data);
-//         msgs += data;
-//       });
-//     res.on("end", () => {
-//       console.log("=====TXN DATA=====");
-
-//       var searchResults = JSON.parse(msgs);
-
-//       console.log("=====TXN DATA=====");
-//       console.log(searchResults);
-//       globalSearchBlocks = searchResults;
-//        response.render('search-blocks.html', { "searchResults": searchResults });
-
-      
-//       }); 
-//    });
-// }
-
-
 
 function handleError(response) {
   response.status(404);
@@ -212,7 +218,8 @@ function handleSearch(request, response) {
   }else if(searchWhat == "TxHash") {
     searchByTxHash(searchText, response);
   }else {
-    searchByAddress(searchText, response);
+    // This is not possible to happen
+    console.log("error");
   }
 }
 

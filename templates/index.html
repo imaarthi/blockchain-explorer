@@ -13,6 +13,11 @@
     <meta name="ethbtc_timestamp" content="{{ ethbtc_timestamp }}">
     <meta name="ethusd" content="{{ ethusd }}">
     <meta name="ethusd_timestamp" content="{{ ethusd_timestamp }}">
+     <meta name="hashrate" content="{{ hashrate }}">
+      <meta name="difficulty" content="{{ difficulty }}">
+       <meta name="blocktime" content="{{ blocktime }}">
+        <meta name="unclerate" content="{{ unclerate }}">
+
 
 
     <title>Ethos.io Blockchain Explorer</title>
@@ -236,9 +241,9 @@ ul {
 
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="card">
-            <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+            <img class="card-img-top" src="./images/other_data.jpg" alt="">
             <div class="card-body">
-              <h4 class="card-title">Hash rate</h4>
+              <h4 class="card-title">Other data</h4>
               <p class="card-text" id="card4">place holder</p>
             </div>
             <div class="card-footer">
@@ -347,6 +352,17 @@ ul {
 
               document.getElementById("card3").innerHTML="Eth / USD: " + meta('ethusd') + "\n \n" +
               meta('ethusd_timestamp');
+
+              var hashrate = meta('hashrate');
+              var difficulty = meta('difficulty');
+              var unclerate = meta('unclerate');
+              var blocktime = meta('blocktime');
+
+              document.getElementById("card4").innerHTML="Block time:" + blocktime + "\n \n" +
+                          "Hash Rate:" + hashrate + "\n" +
+                          "Difficulty:" + difficulty + "\n \n" +
+                          "Uncle Rate:" + unclerate +"\n";
+
 
             $("#submit").click(function(e){
                       $.ajax({
