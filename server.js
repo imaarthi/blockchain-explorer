@@ -119,8 +119,8 @@ function getHomePageStats(response) {
                       "ethusd_timestamp": msgs[0].ethusd_timestamp,
                         "hashrate": m.hashrate,
                         "difficulty": m.difficulty,
-                        "blocktime": m.block_time,
-                        "unclerate": m.uncle_rate } );
+                        "blocktime": m.block_time.toFixed(9),
+                        "unclerate": m.uncle_rate.toFixed(9) } );
 
                                     
                       });
