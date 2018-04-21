@@ -206,7 +206,7 @@ function handleError(response) {
   response.json("Error or No such information..!");
 }
 
-
+app.get('/search/:searchText/:searchWhat', handleSearch);
 app.post('/search/:searchText/:searchWhat', handleSearch);
 function handleSearch(request, response) {
   var searchText = request.params.searchText;

@@ -160,8 +160,13 @@ ul {
           <li>
               <div id="txnBlockDiv">
                 <br/>
-                <b> TxHash&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ TxHash }} <br/>
-                 <b> BlockNo&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ BlockNo }} <br/>
+                 <b> TxHash&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> 
+                   <a href="/search/{{ TxHash }}/TxHash"> {{ TxHash }} </a> <br/>
+
+                 <b> BlockNo&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> 
+                 <a href="/search/{{ BlockNo }}/Block"> {{ BlockNo }} </a><br/>
+
+
                   <b> FromBlock&nbsp;: &nbsp;&nbsp; </b> {{ FromBlock }} <br/>
                    <b> ToBlock&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ ToBlock }} <br/>
                     <b> Quantity&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ Quantity }} <br/>
