@@ -155,17 +155,25 @@ ul {
     </nav>
 
     <!-- Page Content -->
+    <!-- Page Content -->
     <div class="container">
-    <table id="table">
-    <thead>
-        <tr>
-            <th data-field="blockid">Block ID #</th>
-            <th data-field="num_of_txns">Number of transactions</th>
-            <th data-field="mined_by">Mined By</th>
-            <th data-field="block_reward">Block Reward</th>
-        </tr>
-    </thead>
-</table>
+         <!-- TxHash, BlockNo , txDate , FromBlock , ToBlock , Quantity-->
+      <ul>
+        {{#blocks}}
+          <li>
+              <div id="BlockDiv">
+                
+                <b> Block Number&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ blockNumber }} <br/>
+                 <b> Time Stamp&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ timeStamp }} <br/>
+                  <b> Miner&nbsp;: &nbsp;&nbsp; </b> {{ blockMiner }} <br/>
+                   <b> Reward&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ blockReward }} <br/>
+
+              
+              </div>
+          </li>
+
+        {{/blocks}}
+      </ul>
     </div>
     <!-- /.container -->
 
@@ -192,57 +200,6 @@ ul {
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.js"></script>
      <link href="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.css" rel="stylesheet">
-
-    <script>
-
-      
-
-
-     var data = 
-[
-    {
-        "blockid": 0,
-        "num_of_txns": "10",
-        "mined_by": "$0",
-        "block_reward": "0.2 ether"
-    },
-    {
-        "blockid": 1,
-        "num_of_txns": "11",
-        "mined_by": "$1",
-        "block_reward": "1.02 ether"
-    },
-    {
-        "blockid": 2,
-        "num_of_txns": "12",
-        "mined_by": "$2",
-        "block_reward": "10.2 ether"
-    },
-    {
-        "blockid": 3,
-        "num_of_txns": "13",
-        "mined_by": "$3",
-        "block_reward": "0.2 ether"
-    },
-    {
-        "blockid": 4,
-        "num_of_txns": "test4",
-        "mined_by": "$4",
-        "block_reward": "02 ether"
-      }
-
-
-];
-
-$(function () {
-    $('#table').bootstrapTable({
-        data: data
-    });
-});
-
-
-
-    </script>
 
 
 

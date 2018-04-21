@@ -241,6 +241,12 @@ function createTables() {
         console.log("Error:" +error);
       }
   })
+
+      pool.query('CREATE TABLE IF NOT EXISTS blocks(TxHash TEXT PRIMARY KEY, blockNumber TEXT, timeStamp TEXT, blockMiner TEXT, blockReward TEXT)', function(error, data){
+      if(error) {
+        console.log("Error:" + error);
+      }
+  })
 }
 
 function formattedTxns(txns) {
@@ -342,16 +348,16 @@ pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , 
 
 app.get('/blocks', getBlocks);
 function getBlocks(request, response) {
-  var sql = null ;//TODO: your SQL query here 
-  pool.query(sql, function(error, result){
+  pool.query('SELECT * from blocks', function(error, result){
       if(error) {
-        console.log("Error: " +error);
+        console.log("Error: " + error);
       }else {
+        console.log("PLACE");
+        console.log(result);
         var blocks = result.rows;
-        //txns = formattedTxns(txns);
         console.log("Rendering blocks.html");
         console.log(blocks);
-        response.render('blocks.html', { "blocks": blocks });
+        response.render('blocks.html', {"blocks": blocks});
       }
   })
 
@@ -359,21 +365,38 @@ function getBlocks(request, response) {
 
 
 function readBlocksDataAndInsertInDB() {
-  // TODO:
-  // Do API Call 100 times for each of 100 blocks separately
-  // and store it in Database.
+  //var initial = 2165403;
+  var initial = 0;
+  for (var i = 1; i < 5; i++){
+    var tmp = initial+i;
+    var url = 'https://api.etherscan.io/api?module=block&action=getblockreward&blockno=' + tmp + '&apikey=' + etherScanToken;
+    console.log("URL:" +url);
+    https.get(url, res => {
 
-  // Example below:
-  
- //  pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)',
- //      [data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6]],  function(error, data){
- //      if(error) {
- //        console.log(error);
- //      }
- //  })
-     
- //    }
- // });
+      res.setEncoding("utf8");
+      var msgs = "";
+      res.on("data", data => {
+        msgs += data;
+      });
+     res.on("end", () => {
+        msgs = JSON.parse(msgs);
+        console.log("RESULT HERE ");
+        console.log(msgs.result);
+        //msgs = formatEtherStats(msgs.result);
+        console.log("Rendering blocks.html");
+        if (msgs.result.message === "NOTOK"){
+          console.log("not ok");
+        }
+          pool.query('INSERT INTO blocks(blockNumber, timeStamp, blockMiner, blockReward) VALUES($1, $2, $3, $4)',
+          [msgs.result.blockNumber,msgs.result.timeStamp,msgs.result.blockMiner, msgs.result.blockReward],  function(error, data){
+              if(error) {
+               console.log(error);
+              }
+           })
+        
+      });
+        });
+}
 }
 
 
