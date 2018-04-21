@@ -173,12 +173,11 @@ ul {
 
       <div class="input-group md-form form-sm form-2 pl-0">
            <select class="searchid">
-            <option value="TxHash">TxHash</option>
-            <option value="Block">Block</option>
-            <option value="Address">Address</option>
+              <option value="Block">Block</option>
+             <option value="TxHash">TxHash</option>
         </select>
           <input class="form-control my-0 py-1 red-border" type="text" 
-          placeholder="Search by Address, TxHash, Block, Token, Contract" aria-label="Search" id="searchtextbox">
+          placeholder="Search by TxHash or Block" aria-label="Search" id="searchtextbox">
           <div class="input-group-append">
                <button type="button" class="btn btn-info" id="searchbutton">
       <span class="fa fa-search"></span> Search
@@ -290,6 +289,18 @@ ul {
            var what = $(".searchid option:selected").val();
            console.log("what to search:" + what);
             var input = $('#searchtextbox').val();
+            if(what === "Block") {
+              var regex=/^[0-9]+$/;
+              if(!input.match(regex)){
+                alert("Block should be a number. Example: 123");
+                return;
+              }
+            }else if(what === "TxHash") {
+              if(input.length != 66) {
+                alert("TxHash should be 66 chars. Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");
+                return;
+              }
+            } 
             if(input == null || input === undefined || input == "") {
               alert("Please enter a value to search for..!");
             }else { 
@@ -300,7 +311,16 @@ ul {
                   // dataType: 'json',
                   success: (data) => {
                     console.log("success");
-                    window.location = "http://localhost:8080/" + 'search';
+                    console.log(what);
+                    if(what === "Block") {
+                      console.log("Inside blocks");
+                        window.location = "http://localhost:8080/" + 'search-blocks';
+                     }else if(what === "TxHash") {
+                      console.log("Inside transactions");
+                         window.location = "http://localhost:8080/" + 'search-transactions';
+                     }else{
+                      console.log("What the heck is this?");
+                     }
                     if(data == null) {
                       console.log("Data received is null");
                     }

@@ -12,7 +12,8 @@ var etherScanToken = "JGSQ6DWADX27BD2FQ7ZT6NTP2TVDCI7CZS";
 var db = require('any-db');
 var db_url = 'sqlite3://chaindata.db';
 var pool = db.createConnection(db_url);
-var globalSearchResults;
+var globalSearchTxns;
+var globalSearchBlocks;
 
 // CSV parser
 var csv =  require('csv');
@@ -107,7 +108,7 @@ app.post('/enter', function(req, response) {
 
 
 
-function searchBlock(searchText, response) {
+function searchByBlock(searchText, response) {
   var url = 'https://api.blockcypher.com/v1/eth/main/blocks/' + searchText;
   console.log("url is:" + url);
   https.get(url, res => {
@@ -125,8 +126,8 @@ function searchBlock(searchText, response) {
 
       console.log("=====BLOCK DATA=====");
       console.log(searchResults);
-      globalSearchResults = searchResults;
-       response.render('search.html', { "searchResults": searchResults });
+      globalSearchBlocks = searchResults;
+       response.render('search-blocks.html', { "searchResults": searchResults });
 
       
       }); 
@@ -154,8 +155,8 @@ function searchByTxHash(searchText, response) {
 
       console.log("=====TXN DATA=====");
       console.log(searchResults);
-      globalSearchResults = searchResults;
-       response.render('search.html', { "searchResults": searchResults });
+      globalSearchTxns = searchResults;
+       response.render('search-transactions.html', { "searchResults": searchResults });
 
       
       }); 
@@ -163,34 +164,34 @@ function searchByTxHash(searchText, response) {
 }
 
 
-function searchByAddress(searchText, response) {
-//  var len = searchText.length;
-//  var txn = searchText.slice(2,len);
-   var url = 'https://api.blockcypher.com/v1/eth/main/addrs/' + searchText;
-  console.log("url is:" + url);
-  console.log(searchText);
-  https.get(url, res => {
-      res.setEncoding("utf8");
-      var msgs = "";
-      res.on("data", data => {
-        console.log("====RESULTS ON=====");
-        console.log(data);
-        msgs += data;
-      });
-    res.on("end", () => {
-      console.log("=====TXN DATA=====");
+// function searchByAddress(searchText, response) {
+// //  var len = searchText.length;
+// //  var txn = searchText.slice(2,len);
+//    var url = 'https://api.blockcypher.com/v1/eth/main/addrs/' + searchText;
+//   console.log("url is:" + url);
+//   console.log(searchText);
+//   https.get(url, res => {
+//       res.setEncoding("utf8");
+//       var msgs = "";
+//       res.on("data", data => {
+//         console.log("====RESULTS ON=====");
+//         console.log(data);
+//         msgs += data;
+//       });
+//     res.on("end", () => {
+//       console.log("=====TXN DATA=====");
 
-      var searchResults = JSON.parse(msgs);
+//       var searchResults = JSON.parse(msgs);
 
-      console.log("=====TXN DATA=====");
-      console.log(searchResults);
-      globalSearchResults = searchResults;
-       response.render('search.html', { "searchResults": searchResults });
+//       console.log("=====TXN DATA=====");
+//       console.log(searchResults);
+//       globalSearchBlocks = searchResults;
+//        response.render('search-blocks.html', { "searchResults": searchResults });
 
       
-      }); 
-   });
-}
+//       }); 
+//    });
+// }
 
 
 
@@ -207,7 +208,7 @@ function handleSearch(request, response) {
   var searchWhat = request.params.searchWhat;
   console.log("Server searchWhat: "+searchWhat);
   if(searchWhat == "Block") {
-    searchBlock(searchText, response);
+    searchByBlock(searchText, response);
   }else if(searchWhat == "TxHash") {
     searchByTxHash(searchText, response);
   }else {
@@ -283,10 +284,17 @@ function getTokens(request, response) {
 //   response.render('blocks.html');
 // }
 
-app.get('/search', getSearchResult);
-function getSearchResult(request, response) {
-  response.render('search.html',{ "searchResults": globalSearchResults });
+app.get('/search-blocks', getSearchResultBlocks);
+function getSearchResultBlocks(request, response) {
+  response.render('search-blocks.html',{ "searchResults": globalSearchBlocks });
 }
+
+
+app.get('/search-transactions', getSearchResultTransactions);
+function getSearchResultTransactions(request, response) {
+  response.render('search-transactions.html',{ "searchResults": globalSearchTxns });
+}
+
 
 app.get('/contracts', getContracts);
 function getContracts(request, response) {
