@@ -117,6 +117,22 @@ ul {
 
  }
 
+ #blockDiv {
+     border: 2px solid black;
+   /*  background-color: #8eb4fa;*/
+    background-color: #a8c4e7;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    padding-top: 15px;
+    padding-left: 5px;
+    padding-bottom: 30px;
+    padding-right: 5px;
+    width: 100%;
+    text-align: left;
+    justify-content: left;
+ }
+
 
     </style>
   </head>
@@ -161,9 +177,12 @@ ul {
       <ul>
         {{#blocks}}
           <li>
-              <div id="BlockDiv">
+              <div id="blockDiv">
                 
-                <b> Block Number&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ blockNumber }} <br/>
+                <b> Block Number&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> 
+
+                <a href="/search/{{ blockNumber }}/Block"> {{ blockNumber }} </a>
+                <br/>
                  <b> Time Stamp&nbsp;:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> {{ timeStamp }} <br/>
                   <b> Miner&nbsp;: &nbsp;&nbsp; </b> {{ blockMiner }} <br/>
                    <b> Reward&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b> {{ blockReward }} <br/>
