@@ -14,6 +14,7 @@ var db_url = 'sqlite3://chaindata.db';
 var pool = db.createConnection(db_url);
 var globalSearchTxns;
 var globalSearchBlocks;
+var globalSearchTokens;
 
 // CSV parser
 var csv =  require('csv');
@@ -200,6 +201,37 @@ function searchByTxHash(searchText, response) {
 }
 
 
+function searchByToken(searchText, response) {
+   console.log("FUNC searchByToken called");
+   var url = 'https://api.coinmarketcap.com/v1/ticker/' + searchText;
+  console.log("url is:" + url);
+  console.log(searchText);
+  https.get(url, res => {
+      res.setEncoding("utf8");
+      //res.setContentType("json");
+      var msgs = "";
+      res.on("data", data => {
+        console.log("====RESULTS ON=====");
+        console.log(data);
+        msgs += data;
+        console.log("MSGS HERE");
+        console.log(msgs);
+      });
+     res.on("end", () => {
+      console.log("=====Token DATA=====");
+      console.log(msgs);
+       var searchResults = JSON.parse(msgs);
+
+      // console.log("=====Token DATA=====");
+       console.log(searchResults);
+      // globalSearchTokens = searchResults;
+      //  response.render('search-tokens.html', { "searchResults": searchResults });
+
+      
+      }); 
+   });
+}
+
 
 function handleError(response) {
   response.status(404);
@@ -217,6 +249,8 @@ function handleSearch(request, response) {
     searchByBlock(searchText, response);
   }else if(searchWhat == "TxHash") {
     searchByTxHash(searchText, response);
+  }else if(searchWhat == "Token"){
+    searchByToken(searchText, response);
   }else {
     // This is not possible to happen
     console.log("error");
@@ -306,6 +340,11 @@ function getSearchResultBlocks(request, response) {
 app.get('/search-transactions', getSearchResultTransactions);
 function getSearchResultTransactions(request, response) {
   response.render('search-transactions.html',{ "searchResults": globalSearchTxns });
+}
+
+app.get('/search-tokens', getSearchResultTokens);
+function getSearchResultTokens(request, response) {
+  response.render('search-tokens.html',{ "searchResults": globalSearchTokens });
 }
 
 
