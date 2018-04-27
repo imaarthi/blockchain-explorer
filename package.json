@@ -2,7 +2,7 @@
   "name": "blockchain_explorer_latest_aarthi",
   "version": "1.0.0",
   "description": "Ethos.io Block Explorer",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -13,6 +13,7 @@
     "any-db": "^2.2.1",
     "any-db-sqlite3": "^2.1.4",
     "body-parser": "^1.18.2",
+    "config": "^1.30.0",
     "consolidate": "^0.15.1",
     "csv": "^0.3.7",
     "express": "^4.16.3",

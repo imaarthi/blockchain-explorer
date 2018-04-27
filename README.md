@@ -16,9 +16,19 @@ Clone into the repository
 
 3. npm install
 
-4. node server.js
+4. node app.js
 
 5. Open Chrome and run "localhost:8080" to see the application.
+
+
+# Hosted version
+
+$ export NODE_ENV=production
+$ node app.js
+
+Open this link below - or the latest one on EC2 console.
+
+http://ec2-18-221-147-216.us-east-2.compute.amazonaws.com/
 
 
 # Team members
