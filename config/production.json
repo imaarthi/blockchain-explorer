@@ -1,0 +1,10 @@
+{
+  // Localhost configs
+  "ethos": {
+
+    "config": {
+      "host": "/",
+      "port": 80
+    }
+ }
+}
