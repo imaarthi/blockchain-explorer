@@ -25,3 +25,8 @@ APIs
 https://api.etherscan.io
 https://www.etherchain.org/api
 https://api.blockcypher.com
+
+Testing
+==========
+Used https://validator.w3.org/ for testing html/css validation.
+Used qunit for unit testing.

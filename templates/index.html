@@ -22,6 +22,11 @@
 
     <title>Ethos.io Blockchain Explorer</title>
 
+    <!--Qunit testing -->
+      <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.6.0.css">
+  <script src="https://code.jquery.com/qunit/qunit-2.6.0.js"></script>
+
+
      <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
@@ -289,22 +294,80 @@ ul {
               return '';
         }
 
+
+        function validateBlock(input) {
+            var regex=/^[0-9]+$/;
+            input = input.trim();
+              if(!input.match(regex)){
+                alert("Block should be a number. Example: 123, 403455");
+                return false;
+              }
+              else if(parseInt(input) < 0){
+                alert("Block should be a positive number. Example: 123, 403455");
+                return false;
+              }
+              else if(parseInt(input) > 5441245) {
+                alert("No such block created yet. Use a number less than 5441245.Example: 123, 403455");
+                return false;
+              }
+              return true;
+        }
+
+        function validateInput(input) {
+            input = input.trim();
+            if(input == null || input === undefined || input == "") {
+              alert("Please enter a value to search for..!");
+              return false;
+            }
+            else if (input.length <= 0) {
+               alert("Please enter a value to search for..!");
+              return false;
+            }
+
+            return true;
+        }
+
+
+        function validateTxHash(input) {
+
+            input = input.trim();
+            input = input.toLowerCase();
+
+
+            if(!input.startsWith("0x")){
+              alert("TxHash should start with 0x and be of 66 chars. \n Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");
+              return false;
+            }
+
+              else if(input.length != 66) {
+                alert("TxHash should be 66 chars. Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");
+                return;
+              }
+              
+              return true;
+        }
+
+
+
         function handleSearch() {
            var what = $(".searchid option:selected").val();
            console.log("what to search:" + what);
             var input = $('#searchtextbox').val();
+
+            if(!validateInput(input)) {
+              return;
+            }
+
             if(what === "Block") {
-              var regex=/^[0-9]+$/;
-              if(!input.match(regex)){
-                alert("Block should be a number. Example: 123");
+              if(!validateBlock(input)) {
                 return;
               }
             }else if(what === "TxHash") {
-              if(input.length != 66) {
-                alert("TxHash should be 66 chars. Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");
+              if(!validateTxHash(input)) {
                 return;
               }
             } 
+
             if(input == null || input === undefined || input == "") {
               alert("Please enter a value to search for..!");
             }else { 
@@ -387,6 +450,42 @@ ul {
 
         
       });
+
+
+ QUnit.test("validateBlock", function( assert ) {
+        assert.equal(validateBlock("123"), true);
+        assert.equal(validateBlock("123    "), true);
+        assert.equal(validateBlock("xdsdf"), false); // throws an alert
+        assert.equal(validateBlock("xdsdf  "), false); // throws an alert
+        assert.equal(validateBlock("854768954754123"), false);  // throws an alert
+        assert.equal(validateBlock("-3123"), false); // throws an alert
+  });
+
+ QUnit.test("validateInput", function( assert ) {
+        assert.equal(validateInput(""), false); // throws an alert
+        assert.equal(validateInput("  "), false); // throws an alert
+        assert.equal(validateInput("123"), true); 
+       
+  });
+
+
+ QUnit.test("validateTxHash", function( assert ) {
+        assert.equal(validateTxHash(""), false); // throws an alert
+        assert.equal(validateTxHash("  "), false); // throws an alert
+        assert.equal(validateTxHash("123"), false); //  throws an alert
+        assert.equal(validateTxHash("0x123"), false);
+        assert.equal(validateTxHash("0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
+
+        // caps in between
+        assert.equal(validateTxHash("0xc7BECD7bb85FD7BC2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
+       
+       // starting with 0y instead of expected 0x
+       assert.equal(validateTxHash("0yc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), false); // throws an alert
+
+       // less than 66 chars for txHash
+       assert.equal(validateTxHash("0xc7becd7bb85f9defc735b0dc537a40bb11143b937 "), false); // throws an alert
+  });
+
 
     </script>
   </body>
