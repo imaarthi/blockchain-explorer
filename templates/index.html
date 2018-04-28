@@ -1,1 +1,157 @@
-<!DOCTYPE html><html lang="en"><head><link rel="shortcut icon" type="images/ethos_logo.png" href="images/ethos_logo.png" /><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="description" content="Blockchain Explorer"><meta name="author" content=""><meta name="ethbtc" content="{{ ethbtc }}"><meta name="ethbtc_timestamp" content="{{ ethbtc_timestamp }}"><meta name="ethusd" content="{{ ethusd }}"><meta name="ethusd_timestamp" content="{{ ethusd_timestamp }}"><meta name="hashrate" content="{{ hashrate }}"><meta name="difficulty" content="{{ difficulty }}"><meta name="blocktime" content="{{ blocktime }}"><meta name="unclerate" content="{{ unclerate }}"><title>Ethos.io Blockchain Explorer</title><style>#bottomfooter,h3{text-align:center}body{padding-top:54px}@media (min-width:992px){body{padding-top:56px}}.card{height:100%}#logo{max-height:50px}.btn-primary{background:linear-gradient(-180deg,#152a53 0,#6C9Bf3 100%)!important}header{margin:0 auto}.btn-primary:hover{background-color:#8eb4fa!important;color:#fff!important;text-decoration-color:#fff!important;border-color:#000!important}.input-group.md-form.form-sm.form-2 input{border:1px solid #bdbdbd!important;border-top-left-radius:.25rem!important;border-bottom-left-radius:.25rem!important}.input-group.md-form.form-sm.form-2 input.red-border{border:1px solid #21ceab!important}ul{list-style-type:none}#bottomfooter{height:60px;width:100%;display:flex;justify-content:center;align-content:center;position:fixed;right:0;bottom:0;left:0;padding:1rem;text-decoration:none}</style></head><body> <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"><div class="container"> <a class="navbar-brand" href="/"> <img id="logo" src="images/ethos_logo.png" alt="logo"/> </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button><div class="collapse navbar-collapse" id="navbarResponsive"><ul class="navbar-nav ml-auto"><li class="nav-item active"> <a class="nav-link" href="/"><i class="fa fa-home"></i>&nbsp;Home <span class="sr-only">(current)</span> </a></li><li class="nav-item"> <a class="nav-link" href="/blocks"><i class="fa fa-th-large"></i>&nbsp;Blocks</a></li><li class="nav-item"> <a class="nav-link" href="/transactions"><i class="fa fa-exchange-alt"></i>&nbsp;Transactions</a></li><li class="nav-item"> <a class="nav-link" href="/tokens"><i class="fab fa-superpowers"></i>&nbsp;Tokens</a></li></ul></div></div> </nav><div class="container"> <header class="jumbotron my-4"><h3 >Welcome to Ethos blockchain explorer!</h3><ul> {{#msgs}}<li><b> ethbtc:</b> {{ ethbtc }} &nbsp; <b>ethbtc_timestamp:</b> {{ ethbtc_timestamp }}&nbsp;..........&nbsp;<b>ethusd:</b> {{ ethusd }} &nbsp; <b>ethusd_timestamp:</b> {{ ethusd_timestamp }}</li>{{/msgs}}</ul><p class="lead"></p><div class="input-group md-form form-sm form-2 pl-0"> <select class="searchid"><option value="Block">Block</option><option value="TxHash">TxHash</option> </select> <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search by TxHash or Block" aria-label="Search" id="searchtextbox"><div class="input-group-append"> <button type="button" class="btn btn-info" id="searchbutton"> <span class="fa fa-search"></span> Search </button></div></div> </header><div class="row text-center"><div class="col-lg-3 col-md-6 mb-4"><div class="card"> <img class="card-img-top" src="./images/globe2.jpg" alt=""><div class="card-body"><h4 class="card-title">Market Cap</h4><p class="card-text">$50.833 billion</p></div><div class="card-footer"> <a href="https://www.investopedia.com/articles/basics/03/031703.asp" class="btn btn-primary">Learn More!</a></div></div></div><div class="col-lg-3 col-md-6 mb-4"><div class="card"> <img class="card-img-top" src="./images/ethbtc2.jpg" alt=""><div class="card-body"><h4 class="card-title">Ethbtc</h4><p class="card-text" id="card2">placeholder</p></div><div class="card-footer"> <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a></div></div></div><div class="col-lg-3 col-md-6 mb-4"><div class="card"> <img class="card-img-top" src="./images/ethusd1.png" alt=""><div class="card-body"><h4 class="card-title">Ethusd</h4><p class="card-text" id="card3">placeholder</p></div><div class="card-footer"> <a href="https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry" class="btn btn-primary">Learn More!</a></div></div></div><div class="col-lg-3 col-md-6 mb-4"><div class="card"> <img class="card-img-top" src="./images/other_data.jpg" alt=""><div class="card-body"><h4 class="card-title">Other data</h4><p class="card-text" id="card4">place holder</p></div><div class="card-footer"> <a href="https://blockgeeks.com/guides/blockchain-glossary-from-a-z/" class="btn btn-primary">Learn More!</a></div></div></div></div></div> <footer class="py-5 bg-dark" id="bottomfooter"><div class="container"><p class="m-0 text-center text-white">Designed with &hearts; &nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;Copyright &copy; <a href="https://www.ethos.io/"> Ethos.io </a> Block explorer 2018 &nbsp;&nbsp; |&nbsp;&nbsp; <a href="https://www.facebook.com/ethosplatform/" class="author-social" > <i class="fab fa-facebook"></i></a>&nbsp;&nbsp;<a href="https://twitter.com/ethos_io?lang=en" class="author-social" > <i class="fab fa-twitter"></i></a>&nbsp;&nbsp; <a href="mailto:shingo@ethos.io" class="author-social" ><i class="fas fa-envelope"></i></a> &nbsp;&nbsp;</p></div> </footer> <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> <!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script> <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script--><script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <script>function meta(name){var tag=document.querySelector('meta[name='+name+']');if(tag!=null) return tag.content;return'';} function validateBlock(input){var regex=/^[0-9]+$/;input=input.trim();if(!input.match(regex)){alert("Block should be a number. Example: 123, 403455");return false;} else if(parseInt(input)<0){alert("Block should be a positive number. Example: 123, 403455");return false;} else if(parseInt(input)>5441245){alert("No such block created yet. Use a number less than 5441245.Example: 123, 403455");return false;} return true;} function validateInput(input){input=input.trim();if(input==null||input===undefined||input==""){alert("Please enter a value to search for..!");return false;} else if(input.length<=0){alert("Please enter a value to search for..!");return false;} return true;} function validateTxHash(input){input=input.trim();input=input.toLowerCase();if(!input.startsWith("0x")){alert("TxHash should start with 0x and be of 66 chars. n Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");return false;} else if(input.length!=66){alert("TxHash should be 66 chars. Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");return;} return true;} function handleSearch(){var what=$(".searchid option:selected").val();console.log("what to search:"+what);var input=$('#searchtextbox').val();if(!validateInput(input)){return;} if(what==="Block"){if(!validateBlock(input)){return;}}else if(what==="TxHash"){if(!validateTxHash(input)){return;}} if(input==null||input===undefined||input==""){alert("Please enter a value to search for..!");}else{console.log("User searching for:"+input);$.ajax({method:'POST',url:"/search/"+input+"/"+what,success:(data)=>{console.log("success");console.log(what);if(what==="Block"){console.log("Inside blocks");window.location="/"+'search-blocks';}else if(what==="TxHash"){console.log("Inside transactions");window.location="/"+'search-transactions';}else{console.log("What the heck is this?");} if(data==null){console.log("Data received is null");}},error:(data)=>{console.log("error");if(data==null){console.log("Data received is null");}}});}} $('#searchbutton').on('click',handleSearch);$(document).ready(function(){console.log("Document is ready!");document.getElementById("card2").innerHTML="Eth / btc: "+meta('ethbtc')+"n n"+ meta('ethbtc_timestamp');document.getElementById("card3").innerHTML="Eth / USD: "+meta('ethusd')+"n n"+ meta('ethusd_timestamp');var hashrate=meta('hashrate');var difficulty=meta('difficulty');var unclerate=meta('unclerate');var blocktime=meta('blocktime');document.getElementById("card4").innerHTML="<b>Blocktime:</b>"+blocktime+"n n"+"<b> Hash Rate:</b>"+hashrate+"n"+"<b>Difficulty:</b>"+difficulty+" n n"+"<b>Uncle Rate:</b>"+unclerate+"n";$("#submit").click(function(e){$.ajax({method:'POST',url:"/enter",dataType:'json',success:(data)=>{console.log("success");if(data==null){console.log("Data received is null");}},error:(data)=>{console.log("error");if(data==null){console.log("Data received is null");}}});});});</script> </body></html>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<link rel="shortcut icon" type=images/ethos_logo.png href=images/ethos_logo.png />
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name=description content="Blockchain Explorer">
+<meta name=author content>
+<meta name=ethbtc content="{{ ethbtc }}">
+<meta name=ethbtc_timestamp content="{{ ethbtc_timestamp }}">
+<meta name=ethusd content="{{ ethusd }}">
+<meta name=ethusd_timestamp content="{{ ethusd_timestamp }}">
+<meta name=hashrate content="{{ hashrate }}">
+<meta name=difficulty content="{{ difficulty }}">
+<meta name=blocktime content="{{ blocktime }}">
+<meta name=unclerate content="{{ unclerate }}">
+<title>Ethos.io Blockchain Explorer</title>
+<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css integrity=sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4 crossorigin=anonymous>
+<script defer src=https://use.fontawesome.com/releases/v5.0.9/js/all.js integrity=sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl crossorigin=anonymous></script>
+<style>#bottomfooter,h3{text-align:center}body{padding-top:54px}@media(min-width:992px){body{padding-top:56px}}.card{height:100%}#logo{max-height:50px}.btn-primary{background:linear-gradient(-180deg,#152a53 0,#6C9Bf3 100%)!important}header{margin:0 auto}.btn-primary:hover{background-color:#8eb4fa!important;color:#fff!important;text-decoration-color:#fff!important;border-color:#000!important}.input-group.md-form.form-sm.form-2 input{border:1px solid #bdbdbd!important;border-top-left-radius:.25rem!important;border-bottom-left-radius:.25rem!important}.input-group.md-form.form-sm.form-2 input.red-border{border:1px solid #21ceab!important}ul{list-style-type:none}#bottomfooter{height:60px;width:100%;display:flex;justify-content:center;align-content:center;position:fixed;right:0;bottom:0;left:0;padding:1rem;text-decoration:none}</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<div class=container>
+<a class=navbar-brand href=/>
+<img id=logo src=images/ethos_logo.png alt="logo"/>
+</a>
+<button class=navbar-toggler type=button data-toggle=collapse data-target=#navbarResponsive aria-controls=navbarResponsive aria-expanded=false aria-label="Toggle navigation">
+<span class=navbar-toggler-icon></span>
+</button>
+<div class="collapse navbar-collapse" id=navbarResponsive>
+<ul class="navbar-nav ml-auto">
+<li class="nav-item active">
+<a class=nav-link href=/><i class="fa fa-home"></i>&nbsp;Home
+<span class=sr-only>(current)</span>
+</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=/blocks><i class="fa fa-th-large"></i>&nbsp;Blocks</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=/transactions><i class="fa fa-exchange-alt"></i>&nbsp;Transactions</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=/tokens><i class="fab fa-superpowers"></i>&nbsp;Tokens</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class=container>
+<header class="jumbotron my-4">
+<h3>Welcome to Ethos blockchain explorer!</h3>
+<ul>
+{{#msgs}}
+<li><b> ethbtc:</b> {{ ethbtc }} &nbsp; <b>ethbtc_timestamp:</b> {{ ethbtc_timestamp }}&nbsp;..........&nbsp;<b>ethusd:</b> {{ ethusd }} &nbsp; <b>ethusd_timestamp:</b> {{ ethusd_timestamp }} </li>
+{{/msgs}}
+</ul>
+<p class=lead></p>
+<div class="input-group md-form form-sm form-2 pl-0">
+<select class=searchid>
+<option value=Block>Block</option>
+<option value=TxHash>TxHash</option>
+</select>
+<input class="form-control my-0 py-1 red-border" type=text placeholder="Search by TxHash or Block" aria-label=Search id=searchtextbox>
+<div class=input-group-append>
+<button type=button class="btn btn-info" id=searchbutton>
+<span class="fa fa-search"></span> Search
+</button>
+</div>
+</div>
+</header>
+<div class="row text-center">
+<div class="col-lg-3 col-md-6 mb-4">
+<div class=card>
+<img class=card-img-top src=./images/globe2.jpg alt>
+<div class=card-body>
+<h4 class=card-title>Market Cap</h4>
+<p class=card-text>$50.833 billion</p>
+</div>
+<div class=card-footer>
+<a href=https://www.investopedia.com/articles/basics/03/031703.asp class="btn btn-primary">Learn More!</a>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-md-6 mb-4">
+<div class=card>
+<img class=card-img-top src=./images/ethbtc2.jpg alt>
+<div class=card-body>
+<h4 class=card-title>Ethbtc</h4>
+<p class=card-text id=card2>placeholder</p>
+</div>
+<div class=card-footer>
+<a href=https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry class="btn btn-primary">Learn More!</a>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-md-6 mb-4">
+<div class=card>
+<img class=card-img-top src=./images/ethusd1.png alt>
+<div class=card-body>
+<h4 class=card-title>Ethusd</h4>
+<p class=card-text id=card3>placeholder</p>
+</div>
+<div class=card-footer>
+<a href=https://cointelegraph.com/news/data-security-insurance-how-blockchain-is-disrupting-the-health-industry class="btn btn-primary">Learn More!</a>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-md-6 mb-4">
+<div class=card>
+<img class=card-img-top src=./images/other_data.jpg alt>
+<div class=card-body>
+<h4 class=card-title>Other data</h4>
+<p class=card-text id=card4>place holder</p>
+</div>
+<div class=card-footer>
+<a href=https://blockgeeks.com/guides/blockchain-glossary-from-a-z/ class="btn btn-primary">Learn More!</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="py-5 bg-dark" id=bottomfooter>
+<div class=container>
+<p class="m-0 text-center text-white">Designed with &hearts; &nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;Copyright &copy; <a href=https://www.ethos.io/> Ethos.io </a>
+Block explorer 2018 &nbsp;&nbsp; |&nbsp;&nbsp;
+<a href=https://www.facebook.com/ethosplatform/ class=author-social> <i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
+<a href="https://twitter.com/ethos_io?lang=en" class=author-social> <i class="fab fa-twitter"></i></a>&nbsp;&nbsp;
+<a href=mailto:shingo@ethos.io class=author-social><i class="fas fa-envelope"></i></a>
+&nbsp;&nbsp;
+</p>
+</div>
+</footer>
+<script src=https://code.jquery.com/jquery-3.3.1.slim.min.js integrity=sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo crossorigin=anonymous></script>
+<script src=//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js></script>
+<script>function meta(name){var tag=document.querySelector('meta[name='+name+']');if(tag!=null)
+return tag.content;return'';}
+function validateBlock(input){var regex=/^[0-9]+$/;input=input.trim();if(!input.match(regex)){alert("Block should be a number. Example: 123, 403455");return false;}
+else if(parseInt(input)<0){alert("Block should be a positive number. Example: 123, 403455");return false;}
+else if(parseInt(input)>5441245){alert("No such block created yet. Use a number less than 5441245.Example: 123, 403455");return false;}
+return true;}
+function validateInput(input){input=input.trim();if(input==null||input===undefined||input==""){alert("Please enter a value to search for..!");return false;}
+else if(input.length<=0){alert("Please enter a value to search for..!");return false;}
+return true;}
+function validateTxHash(input){input=input.trim();input=input.toLowerCase();if(!input.startsWith("0x")){alert("TxHash should start with 0x and be of 66 chars. \n Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");return false;}
+else if(input.length!=66){alert("TxHash should be 66 chars. Example: 0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937");return;}
+return true;}
+function handleSearch(){var what=$(".searchid option:selected").val();console.log("what to search:"+what);var input=$('#searchtextbox').val();if(!validateInput(input)){return;}
+if(what==="Block"){if(!validateBlock(input)){return;}}else if(what==="TxHash"){if(!validateTxHash(input)){return;}}
+if(input==null||input===undefined||input==""){alert("Please enter a value to search for..!");}else{console.log("User searching for:"+input);$.ajax({method:'POST',url:"/search/"+input+"/"+what,success:(data)=>{console.log("success");console.log(what);if(what==="Block"){console.log("Inside blocks");window.location="/"+'search-blocks';}else if(what==="TxHash"){console.log("Inside transactions");window.location="/"+'search-transactions';}else{console.log("What the heck is this?");}
+if(data==null){console.log("Data received is null");}},error:(data)=>{console.log("error");if(data==null){console.log("Data received is null");}}});}}
+$('#searchbutton').on('click',handleSearch);$(document).ready(function(){console.log("Document is ready!");document.getElementById("card2").innerHTML="Eth / btc: "+meta('ethbtc')+"\n  \n"+
+meta('ethbtc_timestamp');document.getElementById("card3").innerHTML="Eth / USD: "+meta('ethusd')+"\n \n"+
+meta('ethusd_timestamp');var hashrate=meta('hashrate');var difficulty=meta('difficulty');var unclerate=meta('unclerate');var blocktime=meta('blocktime');document.getElementById("card4").innerHTML="<b>Blocktime:</b>"+blocktime+"\n \n"+"<b> Hash Rate:</b>"+hashrate+"\n"+"<b>Difficulty:</b>"+difficulty+"   \n \n"+"<b>Uncle Rate:</b>"+unclerate+"\n";$("#submit").click(function(e){$.ajax({method:'POST',url:"/enter",dataType:'json',success:(data)=>{console.log("success");if(data==null){console.log("Data received is null");}},error:(data)=>{console.log("error");if(data==null){console.log("Data received is null");}}});});});</script>
+</body>
+</html>
