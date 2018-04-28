@@ -199,20 +199,15 @@ ul {
 * Sends a request to API to get tokens.
 */
 
- // Aarthi:
- // Client should send request to server, server should get this information from
- // url below and pass on the data to server.
+
 
   $.ajax({
     type: "GET",
-    url: 'https://api.coinmarketcap.com/v1/ticker/?start=100&limit=15',
+    url: 'https://api.coinmarketcap.com/v1/ticker/?start=100&limit=1000',
     dataType: "json",
 
   success: function(response){
-    //console.log(response);
-    // console.log(response[0]);
-    // console.log('RESPONSE IS:' + Object.keys(response));
-    //  console.log('RESPONSE IS:' + Object.values(response));
+
       var data1 = [];
       for(var i=0; i < response.length; i++) {
 

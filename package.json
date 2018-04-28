@@ -18,9 +18,11 @@
     "cors": "^2.8.4",
     "csv": "^0.3.7",
     "express": "^4.16.3",
+    "express-logging": "^1.1.1",
     "hogan": "^1.0.2",
     "hogan.js": "^3.0.2",
     "https": "^1.0.0",
+    "logops": "^2.1.0",
     "mustache": "^2.3.0",
     "node-coinmarketcap-api": "^1.0.4",
     "save": "^2.3.2"
