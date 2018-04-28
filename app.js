@@ -3,6 +3,9 @@ var https = require('https');
 var app = express();
 var engines = require('consolidate');
 var config = require('config');
+var cors = require('cors');
+var Coinmarketcap = require('node-coinmarketcap-api');
+var coinmarketcap = new Coinmarketcap();
 
 var PORT = config.get('ethos.config.port');
 console.log("PORT USED: " + PORT);
@@ -19,6 +22,23 @@ var pool = db.createConnection(db_url);
 var globalSearchTxns;
 var globalSearchBlocks;
 var globalSearchTokens;
+
+
+// CORS
+var whitelist = [
+    'http://0.0.0.0:' + PORT,
+    'https://api.coinmarketcap.com/v1/ticker/'
+];
+
+var corsOptions = {
+    origin: function(origin, callback){
+        var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+        callback(null, originIsWhitelisted);
+    },
+    credentials: true
+};
+app.use(cors(corsOptions));
+
 
 // CSV parser
 var csv =  require('csv');
@@ -198,7 +218,6 @@ function searchByTxHash(searchText, response) {
       console.log(searchResults);
       globalSearchTxns = searchResults;
        response.render('search-transactions.html', { "searchResults": searchResults });
-
       
       }); 
    });
@@ -207,33 +226,41 @@ function searchByTxHash(searchText, response) {
 
 function searchByToken(searchText, response) {
    console.log("FUNC searchByToken called");
-   var url = 'https://api.coinmarketcap.com/v1/ticker/' + searchText;
-  console.log("url is:" + url);
-  console.log(searchText);
-  https.get(url, res => {
-      res.setEncoding("utf8");
-      //res.setContentType("json");
-      var msgs = "";
-      res.on("data", data => {
-        console.log("====RESULTS ON=====");
-        console.log(data);
-        msgs += data;
-        console.log("MSGS HERE");
-        console.log(msgs);
-      });
-     res.on("end", () => {
-      console.log("=====Token DATA=====");
-      console.log(msgs);
-       var searchResults = JSON.parse(msgs);
+
+  ( async () => {
+   let results = await coinmarketcap.ticker(searchText, 'EUR');
+    console.log(results);
+      globalSearchTokens = results;
+       response.render('search-tokens.html', { "searchResults": results });
+  })();
+
+  //  var url = 'https://api.coinmarketcap.com/v1/ticker/' + searchText;
+  // console.log("url is:" + url);
+  // console.log(searchText);
+  // https.get(url, res => {
+  //     res.setEncoding("utf8");
+  //     //res.setContentType("json");
+  //     var msgs = "";
+  //     res.on("data", data => {
+  //       console.log("====RESULTS ON=====");
+  //       console.log(data);
+  //       // msgs += data;
+  //       // console.log("MSGS HERE");
+  //       // console.log(msgs);
+  //     });
+  //    res.on("end", () => {
+  //     console.log("=====Token DATA=====");
+  //     console.log(msgs);
+      // var searchResults = JSON.parse(msgs);
 
       // console.log("=====Token DATA=====");
-       console.log(searchResults);
+     //  console.log(searchResults);
       // globalSearchTokens = searchResults;
       //  response.render('search-tokens.html', { "searchResults": searchResults });
 
       
-      }); 
-   });
+   //    }); 
+   // });
 }
 
 
