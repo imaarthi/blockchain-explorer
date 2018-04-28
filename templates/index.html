@@ -452,39 +452,39 @@ ul {
       });
 
 
- QUnit.test("validateBlock", function( assert ) {
-        assert.equal(validateBlock("123"), true);
-        assert.equal(validateBlock("123    "), true);
-        assert.equal(validateBlock("xdsdf"), false); // throws an alert
-        assert.equal(validateBlock("xdsdf  "), false); // throws an alert
-        assert.equal(validateBlock("854768954754123"), false);  // throws an alert
-        assert.equal(validateBlock("-3123"), false); // throws an alert
-  });
+ // QUnit.test("validateBlock", function( assert ) {
+ //        assert.equal(validateBlock("123"), true);
+ //        assert.equal(validateBlock("123    "), true);
+ //        assert.equal(validateBlock("xdsdf"), false); // throws an alert
+ //        assert.equal(validateBlock("xdsdf  "), false); // throws an alert
+ //        assert.equal(validateBlock("854768954754123"), false);  // throws an alert
+ //        assert.equal(validateBlock("-3123"), false); // throws an alert
+ //  });
 
- QUnit.test("validateInput", function( assert ) {
-        assert.equal(validateInput(""), false); // throws an alert
-        assert.equal(validateInput("  "), false); // throws an alert
-        assert.equal(validateInput("123"), true); 
+ // QUnit.test("validateInput", function( assert ) {
+ //        assert.equal(validateInput(""), false); // throws an alert
+ //        assert.equal(validateInput("  "), false); // throws an alert
+ //        assert.equal(validateInput("123"), true); 
        
-  });
+ //  });
 
 
- QUnit.test("validateTxHash", function( assert ) {
-        assert.equal(validateTxHash(""), false); // throws an alert
-        assert.equal(validateTxHash("  "), false); // throws an alert
-        assert.equal(validateTxHash("123"), false); //  throws an alert
-        assert.equal(validateTxHash("0x123"), false);
-        assert.equal(validateTxHash("0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
+ // QUnit.test("validateTxHash", function( assert ) {
+ //        assert.equal(validateTxHash(""), false); // throws an alert
+ //        assert.equal(validateTxHash("  "), false); // throws an alert
+ //        assert.equal(validateTxHash("123"), false); //  throws an alert
+ //        assert.equal(validateTxHash("0x123"), false);
+ //        assert.equal(validateTxHash("0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
 
-        // caps in between
-        assert.equal(validateTxHash("0xc7BECD7bb85FD7BC2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
+ //        // caps in between
+ //        assert.equal(validateTxHash("0xc7BECD7bb85FD7BC2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), true);
        
-       // starting with 0y instead of expected 0x
-       assert.equal(validateTxHash("0yc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), false); // throws an alert
+ //       // starting with 0y instead of expected 0x
+ //       assert.equal(validateTxHash("0yc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937 "), false); // throws an alert
 
-       // less than 66 chars for txHash
-       assert.equal(validateTxHash("0xc7becd7bb85f9defc735b0dc537a40bb11143b937 "), false); // throws an alert
-  });
+ //       // less than 66 chars for txHash
+ //       assert.equal(validateTxHash("0xc7becd7bb85f9defc735b0dc537a40bb11143b937 "), false); // throws an alert
+ //  });
 
 
     </script>
