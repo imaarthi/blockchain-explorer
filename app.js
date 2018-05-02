@@ -260,6 +260,12 @@ function createTables() {
       }
   })
 
+  pool.query('CREATE TABLE IF NOT EXISTS etherprice(ID INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, UnixTimeStamp TEXT, Value REAL)', function(error, data){
+      if(error) {
+        logger.info("Error:" +error);
+      }
+  })
+
       pool.query('CREATE TABLE IF NOT EXISTS blocks(TxHash TEXT PRIMARY KEY, blockNumber TEXT, timeStamp TEXT, blockMiner TEXT, blockReward TEXT)', function(error, data){
       if(error) {
         logger.info("Error:" + error);
@@ -333,15 +339,15 @@ function getContracts(request, response) {
 }
 
 
-function insertDB(TxHash, BlockNo , UnixTimestamp , txDate , From , To , Quantity ){
+// function insertDB(TxHash, BlockNo , UnixTimestamp , txDate , From , To , Quantity ){
 
-   pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)', [TxHash, BlockNo , UnixTimestamp , txDate , FromBlock , ToBlock , Quantity],  function(error, data){
-      if(error) {
-        logger.info(error);
-      }
-  })
+//    pool.query('INSERT INTO transactions(TxHash, BlockNo , UnixTimestamp , TxDate , FromBlock , ToBlock , Quantity) VALUES($1, $2, $3, $4, $5, $6, $7)', [TxHash, BlockNo , UnixTimestamp , txDate , FromBlock , ToBlock , Quantity],  function(error, data){
+//       if(error) {
+//         logger.info(error);
+//       }
+//   })
 
-}
+// }
 
 
 function readTxnsDataAndInsertInDB() {
@@ -380,6 +386,84 @@ function getBlocks(request, response) {
 
 }
 
+function formatStats(msgs) {
+  var formatted = [];
+ 
+   msgs = Object.values(msgs[0]);
+   
+    var tmp = {
+      "ethbtc": msgs[0],
+      "ethbtc_timestamp" : msgs[1],
+      "ethusd" : msgs[2],
+      "ethusd_timestamp": msgs[3]
+    };
+    formatted.push(tmp);
+  
+  return formatted;
+}
+
+function formatMkt(msgs) {
+  var formatted = [];
+
+  for(var i=0; i < msgs.length; i++) {
+    m = Object.values(msgs[i])
+    //console.log("formatMkt:" + Object.values(msgs[i]));
+
+    var tmp = {
+      "ethusd" : m[0],
+      "ethusd_timestamp": m[1]
+    };
+    formatted.push(tmp);
+  }
+  
+ // console.log(formatted);
+
+  return formatted;
+}
+
+
+app.get('/markets', getMarkets);
+function getMarkets(request, response) {
+
+ var sql = 'SELECT Date,Value FROM etherprice';
+
+  pool.query(sql, function(error, result){
+      if(error) {
+        logger.info("Error: " +error);
+      }else {
+        var msgs = result.rows;
+        msgs = formatMkt(msgs);
+
+        logger.info("Rendering markets.html");
+        //logger.info(msgs);
+        //response.cookie('mkt', JSON.stringify(msgs))
+        response.render('markets.html', { "msgs": msgs });
+      }
+  })
+
+
+
+  // var url = 'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=' + etherScanToken;
+  // https.get(url, res => {
+  //     res.setEncoding("utf8");
+  //     var msgs = "";
+  //     res.on("data", data => {
+  //       msgs += data;
+  //     });
+  //   res.on("end", () => {
+  //     msgs = JSON.parse(msgs);
+  //      console.log('Markets1:');
+  //          console.log(msgs);
+  //     msgs = formatStats(msgs.result);
+  //     console.log('Markets:');
+  //          console.log(msgs);
+  //               response.render('markets.html', {"msgs": msgs});
+  //     });
+
+  // });
+    
+}
+
 
 function readBlocksDataAndInsertInDB() {
   //var initial = 2165403;
@@ -416,6 +500,24 @@ function readBlocksDataAndInsertInDB() {
 }
 }
 
+function readEtherPriceAndInsertInDB() {
+
+  var txFile = "./etherprice.csv";
+  csv_obj.from.path(txFile).to.array(function (data) {
+    for (var i = 1; i < data.length; i++) {
+      //logger.info(data[i][0])
+
+    pool.query('INSERT INTO etherprice(Date, UnixTimeStamp, Value) VALUES($2, $3, $4)',
+          [data[i][0],data[i][1],data[i][2]],  function(error, data){
+          if(error) {
+            logger.info(error);
+          }
+      })
+     
+    }
+ });
+}
+
 function closeDBConnection() {
   pool.end()
 }
@@ -433,11 +535,14 @@ logger.info("Creating the Database and tables");
 createTables();
 logger.info("Created tables");
 
+
+
+
+readBlocksDataAndInsertInDB();
+
 logger.info("Inserting transactions data into database");
 readTxnsDataAndInsertInDB();
 logger.info("Inserted transactions data into database");
-
-readBlocksDataAndInsertInDB();
 
 // Server App listening 
 logger.info("Server listening on Port: " +PORT);
