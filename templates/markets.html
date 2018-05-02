@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="shortcut icon" type="images/ethos_logo.png" href="images/ethos_logo.png" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blockchain Explorer">
+    <meta name="author" content="">
+    <meta name=msgs content="{{ msgs }}">
+    <title>Ethos.io Blockchain Explorer</title>
+
+    <!-- Bootstrap core JavaScript -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.js"></script>
+     <link href="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.css" rel="stylesheet">
+
+   
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <!-- <script src="https://momentjs.com/downloads/moment.js"></script> -->
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" type="text/html" rel="stylesheet">
+   
+      <style>
+        body {
+      padding-top: 54px;
+    }
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.card {
+  height: 100%;
+}
+
+#logo {
+  max-height: 50px;
+}
+
+.btn-primary {
+  background: linear-gradient(-180deg, #152a53 0%, #6C9Bf3 100%)  !important;
+}
+
+h3 {
+  text-align: center;
+}
+
+header {
+  margin-top: 50px;
+}
+
+ #middle-container{
+  margin-bottom: 115px;
+ }
+
+
+.btn-primary:hover {
+  background-color: #8eb4fa !important;
+  color: white !important;
+  text-decoration-color: white !important;
+  border-color: black !important;
+}
+
+.input-group.md-form.form-sm.form-2 input {
+    border: 1px solid #bdbdbd  !important;
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+.input-group.md-form.form-sm.form-2 input.red-border  {
+    border: 1px solid #21ceab !important;
+}
+
+ul {
+  list-style-type: none;
+  /*text-decoration: bold;*/
+}                
+
+#bottomfooter {
+ /* height: -60px;
+  margin-bottom: 0px;*/
+
+   left:0px;
+   bottom:0px;
+   height:60px;
+   width:100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      text-align: center;
+/*    color: white;*/
+    text-decoration: none;
+}
+ 
+ #table {
+  margin-top: 90px;
+
+ }
+
+ th {
+    background-color: #8eb4fa;
+/*  border: 2px solid black;*/
+ }
+
+ tr {
+  background-color: #e8f5fe;
+
+ }
+
+ #ethChart{
+    margin-top: 20px;
+    width: 350px;
+    height: 100px;
+ }
+
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img id="logo" src="images/ethos_logo.png" alt="logo"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/"><i class="fa fa-home"></i>&nbsp;Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/blocks"><i class="fa fa-th-large"></i>&nbsp;Blocks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/transactions"><i class="fa fa-exchange-alt"></i>&nbsp;Transactions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tokens"><i class="fab fa-superpowers"></i>&nbsp;Tokens</a>
+            </li>
+            <li class=nav-item>
+<a class=nav-link href=/markets><i class="fas fa-chart-line"></i>&nbsp;Markets</a>
+</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container" id="middle-container">
+      <canvas id="ethChart" width="300" height="250"></canvas>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark" id="bottomfooter">
+      <div class="container">
+        <p class="m-0 text-center text-white">Designed with &hearts; &nbsp;&nbsp;&nbsp;&nbsp;|  &nbsp;&nbsp;Copyright &copy; <a href="https://www.ethos.io/"> Ethos.io  </a>
+        Block explorer 2018  &nbsp;&nbsp; |&nbsp;&nbsp;
+        <a href="https://www.facebook.com/ethosplatform/" class="author-social" > <i class="fab fa-facebook"></i></a>&nbsp;&nbsp;
+
+         <a href="https://twitter.com/ethos_io?lang=en" class="author-social" > <i class="fab fa-twitter"></i></a>&nbsp;&nbsp;
+      
+        <a href="mailto:shingo@ethos.io" class="author-social" ><i class="fas fa-envelope"></i></a> 
+        &nbsp;&nbsp;
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+
+
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.js"></script>
+     <link href="https://rawgit.com/wenzhixin/bootstrap-table/master/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <script>
+
+                var ethusd = [];
+        var timestamp = [];
+$(document).ready(function() {
+ // AJAX in the data file
+    $.ajax({
+        type: "GET",
+        url: "etherprice.csv",
+        dataType: "text",
+        success: function(data) {processData(data);}
+        });
+
+    // Let's process the data from the data file
+    function processData(data) {
+        var lines = data.split(/\r\n|\n/);
+
+        //Set up the data arrays
+        var ethusd = [];
+        var timestamp = [];
+
+        var headings = lines[0].split(','); // Splice up the first row to get the headings
+
+        for (var j=1; j<lines.length; j++) {
+        var values = lines[j].split(','); // Split up the comma seperated values
+           // We read the key,1st, 2nd and 3rd rows 
+           ethusd.push(values[2]); // Read in as string
+           // Recommended to read in as float, since we'll be doing some operations on this later.
+           timestamp.push(values[0]); 
+
+        }
+
+
+        console.log("Finally");
+        console.log(ethusd);
+
+                var ctx = document.getElementById("ethChart").getContext('2d');
+
+                // Instantiate a new chart using 'data' (defined below)
+                var data = {
+                    labels: timestamp,
+                    datasets: [
+                      {
+                        label: "Ethusd",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: ethusd
+                      }
+                    ]
+                  };
+
+                  //var myChart = new Chart(ctx).Line(data);
+                  var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data
+                });
+    // // For display
+    // var x= 0;
+    // console.log(headings[0]+" : "+time[x]+headings[1]+" : "+data1[x]+headings[2]+" : "+data2[x]+headings[4]+" : "+data2[x]);
+    }
+})
+
+   function meta(name)
+   {    var tag=document.querySelector('meta[name='+name+']');if(tag!=null)
+        return tag.content;return'';
+    }
+
+var msgs = meta('msgs');
+
+// console.log(Object.keys(msgs));
+// console.log("values");
+// console.log(Object.values(msgs));
+var ethusd = [];
+var ethusd_timestamp = [];
+
+for(var i = 0; i< msgs.length; i++) {
+    var m = Object.values(msgs[i]);
+    //console.log(Object.values(msgs[i]));
+    ethusd.push(m[2]);
+    ethusd_timestamp.push(m[1]);
+} 
+
+
+
+
+
+var ctx = document.getElementById("ethChart").getContext('2d');
+
+// Instantiate a new chart using 'data' (defined below)
+var data = {
+    labels: timestamp,
+    datasets: [
+      {
+        label: "Ethusd",
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(220,220,220,1)",
+        pointColor: "rgba(220,220,220,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: ethusd
+      }
+    ]
+  };
+
+  //var myChart = new Chart(ctx).Line(data);
+  var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data
+});
+
+
+// var myChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+//         datasets: [{
+//             label: '# of Votes',
+//             data: [12, 19, 3, 5, 2, 3],
+//             backgroundColor: [
+//                 'rgba(255, 99, 132, 0.2)',
+//                 'rgba(54, 162, 235, 0.2)',
+//                 'rgba(255, 206, 86, 0.2)',
+//                 'rgba(75, 192, 192, 0.2)',
+//                 'rgba(153, 102, 255, 0.2)',
+//                 'rgba(255, 159, 64, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgba(255,99,132,1)',
+//                 'rgba(54, 162, 235, 1)',
+//                 'rgba(255, 206, 86, 1)',
+//                 'rgba(75, 192, 192, 1)',
+//                 'rgba(153, 102, 255, 1)',
+//                 'rgba(255, 159, 64, 1)'
+//             ],
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero:true
+//                 }
+//             }]
+//         }
+//     }
+
+
+
+//  });
+
+
+    </script>
+
+
+
+  </body>
+
+</html>
