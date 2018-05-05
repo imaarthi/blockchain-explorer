@@ -10,9 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "any-db": "^2.2.1",
+    "any-db": "^2.1.0",
     "any-db-sqlite3": "^2.1.4",
+    "asserts": "^4.0.2",
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-webdriver": "^1.2.0",
     "config": "^1.30.0",
     "consolidate": "^0.15.1",
     "cors": "^2.8.4",
@@ -22,9 +25,16 @@
     "hogan": "^1.0.2",
     "hogan.js": "^3.0.2",
     "https": "^1.0.0",
+    "jquery": "^3.3.1",
     "logops": "^2.1.0",
     "mustache": "^2.3.0",
     "node-coinmarketcap-api": "^1.0.4",
-    "save": "^2.3.2"
+    "sandbox": "^0.8.6",
+    "save": "^2.3.2",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "webdriverjs": "^1.7.5"
+  },
+  "devDependencies": {
+    "mocha": "^5.1.1"
   }
 }

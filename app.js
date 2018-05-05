@@ -1,5 +1,7 @@
 var express = require('express')
 var https = require('https'); 
+var jquery= require('jquery'); 
+
 var app = express();
 var engines = require('consolidate');
 var config = require('config');
@@ -8,6 +10,191 @@ var Coinmarketcap = require('node-coinmarketcap-api');
 var coinmarketcap = new Coinmarketcap();
 var expressLogging = require('express-logging');
 var logger = require('logops');
+// Source: https://stackoverflow.com/questions/39069396/selenium-webdriver-node-js
+ var webdriver = require('selenium-webdriver');
+ var mocha = require('mocha')
+ var assert = require('assert');
+
+//NOTE: Only uncomment one test at a time.
+//Test 1: localhost renders the home page,  
+/*
+
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+driver.get('http://localhost:8080');
+var element = driver.findElement(webdriver.By.id('searchtextbox'));
+
+element.sendKeys('23-3-111');
+driver.findElement(webdriver.By.id('searchbutton')).click();
+var millisecondsToWait = 500;
+driver.sleep(1000);
+//setTimeout(function() {
+driver.wait(webdriver.until.alertIsPresent());
+var alert = driver.switchTo().alert();
+alert.accept();
+*/
+//end test 1
+
+// Test 2: TxHash search
+
+/*
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+// selects TxHash
+driver.get('http://localhost:8080');
+
+driver.getTitle(function(title) {
+	assertEquals("Ethos.io Blockchain Explorer", title);
+});
+
+driver.findElement(webdriver.By.css('.searchid > option:nth-child(2)')).then(function(element){
+	element.click();
+	//asert TxHash has been selected
+	element.getAttribute('value').then(function(value) {
+    	assert.equal(value, 'TxHash');
+	});
+})
+
+driver.findElement(webdriver.By.id('searchtextbox')).then(function(search){
+	search.sendKeys('0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937');
+	driver.findElement(webdriver.By.id('searchbutton')).click();
+	driver.getTitle(function(title) {
+		assertEquals("Search Transactions", title);
+		assertEquals("http://localhost:8080/search-transactions", driver.getCurrentUrl());
+	});
+});
+// End Test 2
+*/
+
+// Test 3: Homepage links
+
+/*
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+// selects TxHash
+driver.get('http://localhost:8080');
+
+driver.getTitle(function(title) {
+	assertEquals("Ethos.io Blockchain Explorer", title);
+});
+
+
+
+driver.findElement(webdriver.By.css('a[href="https://www.investopedia.com/articles/basics/03/031703.asp"]')).then(function(element){
+    console.log('Found');
+    element.click();
+
+});
+
+
+
+/*driver.findElement(webdriver.By.id('market_cap_defined')).then(function(market_cap_button){
+	market_cap_button.click();
+	driver.getTitle(function(title) {
+		assertEquals("Market Capitalization Defined", title);
+		assertEquals("https://www.investopedia.com/articles/basics/03/031703.asp", driver.getCurrentUrl());
+	});
+});
+*/
+// End Test 3
+
+// Test 4: Checks to see blocklist and blockdiv exists
+
+/*
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+// Goes to blocks page
+driver.get('http://localhost:8080/blocks');
+
+driver.getTitle(function(title) {
+	assertEquals("Blocks", title);
+});
+
+
+driver.findElements(webdriver.By.id("blocklist")).then(function(){
+	console.log('Success: ul list exists');
+	driver.findElements(webdriver.By.id("blockDiv")).then(function(){
+		console.log('Success: li"s for blockDiv exists')
+	})
+});
+*/
+
+//End test 4
+
+/*
+// Test 5: Checks to see blocklist and blockdiv exists
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+// Goes to blocks page
+driver.get('http://localhost:8080/transactions');
+
+driver.getTitle(function(title) {
+	assertEquals("Search Transactions", title);
+});
+
+
+driver.findElements(webdriver.By.id("transactions")).then(function(){
+	console.log('Success: ul list transactions exists');
+	driver.findElements(webdriver.By.id("txnBlockDiv")).then(function(){
+		console.log('Success: li"s for txnBlockDiv exists')
+	})
+});
+//End test 5
+*/
+
+//Test 6: 
+
+/*
+var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .build();
+
+// Goes to blocks page
+driver.get('http://localhost:8080/tokens');
+
+try{driver.getTitle(function(title) {
+	assertEquals("Tokens", title);
+})} catch(e){
+	console.log(e);
+}
+
+try{driver.findElements(webdriver.By.id("tokens_table")).then(function(table){
+//try{driver.findElements(webdriver.By.className("bootstrap-table")).then(function(){
+	console.log('Success: Tokens table found');
+	var job = 0;
+
+
+driver.wait(function () {
+    driver.findElement(webdriver.By.css(".table table-hover tr[data-index='" + job + "']"));
+    driver.actions().mouseMove(el).perform();
+}, 3000);
+
+
+
+// Hovering over elements.
+	driver.findElement(webdriver.By.css("#tokens_table tr[data-index='" + job + "']")).then(function(elem){
+			driver.actions().mouseMove(elem).perform();
+			driver.sleep(5000);
+			driver.quit();
+		});
+
+})}catch (e){
+    console.log(e);
+}
+
+		
+*/
+
 
 var PORT = config.get('ethos.config.port');
 
@@ -56,6 +243,35 @@ app.set('view engine', 'html'); //register .html extension as template engine so
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+
+// Erica's test
+//https://stackoverflow.com/questions/15859143/selecting-dropdown-in-webdriverjs
+function selectOption(selector, item){
+    var selectList, desiredOption;
+
+    selectList = this.findElement(selector);
+    selectList.click();
+
+    selectList.findElements(protractor.By.tagName('option'))
+        .then(function findMatchingOption(options){
+            options.some(function(option){
+                option.getText().then(function doesOptionMatch(text){
+                    if (item === text){
+                        desiredOption = option;
+                        return true;
+                    }
+                });
+            });
+        })
+        .then(function clickOption(){
+            if (desiredOption){
+                desiredOption.click();
+            }
+        });
+}
+
+
 
 // For minutes and seconds, add an extra 0, if value is < 10, for proper format
 function getTwoDigits(val) {
