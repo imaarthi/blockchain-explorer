@@ -11,189 +11,324 @@ var coinmarketcap = new Coinmarketcap();
 var expressLogging = require('express-logging');
 var logger = require('logops');
 // Source: https://stackoverflow.com/questions/39069396/selenium-webdriver-node-js
+
+ var assert = require('assert');
+var mocha = require('mocha')
+var chai = require('chai')
+require('webdriverjs-helper');
+
+var testResults = [];
+
+// Source: https://stackoverflow.com/questions/39069396/selenium-webdriver-node-js
+
  var webdriver = require('selenium-webdriver');
  var mocha = require('mocha')
  var assert = require('assert');
+ var chai = require('chai');
 
-//NOTE: Only uncomment one test at a time.
-//Test 1: localhost renders the home page,  
-/*
-
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-driver.get('http://localhost:8080');
-var element = driver.findElement(webdriver.By.id('searchtextbox'));
-
-element.sendKeys('23-3-111');
-driver.findElement(webdriver.By.id('searchbutton')).click();
-var millisecondsToWait = 500;
-driver.sleep(1000);
-//setTimeout(function() {
-driver.wait(webdriver.until.alertIsPresent());
-var alert = driver.switchTo().alert();
-alert.accept();
-*/
-//end test 1
-
-// Test 2: TxHash search
-
-/*
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-// selects TxHash
-driver.get('http://localhost:8080');
-
-driver.getTitle(function(title) {
-	assertEquals("Ethos.io Blockchain Explorer", title);
-});
-
-driver.findElement(webdriver.By.css('.searchid > option:nth-child(2)')).then(function(element){
-	element.click();
-	//asert TxHash has been selected
-	element.getAttribute('value').then(function(value) {
-    	assert.equal(value, 'TxHash');
-	});
-})
-
-driver.findElement(webdriver.By.id('searchtextbox')).then(function(search){
-	search.sendKeys('0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937');
-	driver.findElement(webdriver.By.id('searchbutton')).click();
-	driver.getTitle(function(title) {
-		assertEquals("Search Transactions", title);
-		assertEquals("http://localhost:8080/search-transactions", driver.getCurrentUrl());
-	});
-});
-// End Test 2
-*/
-
-// Test 3: Homepage links
-
-/*
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-// selects TxHash
-driver.get('http://localhost:8080');
-
-driver.getTitle(function(title) {
-	assertEquals("Ethos.io Blockchain Explorer", title);
-});
+ 
+run_tests();
+function run_tests(){
+  //To run a singular test, just call a function like so:
+  //invalid_txhash_search()
 
 
+  invalid_block_search().then(function() {
+    valid_block_search().then(function(){
+      invalid_txhash_search().then(function(){
+        valid_txhash_search().then(function(){
+          block_div_list_exists().then(function(){
+            txns_div_list_exists().then(function(){
+              tokens_table_exists().then(function(){
+                console.log('Cumulative test results:')
+                console.log(testResults);
+              })
+            })
+          })
+        })
+      })
+    })
 
-driver.findElement(webdriver.By.css('a[href="https://www.investopedia.com/articles/basics/03/031703.asp"]')).then(function(element){
-    console.log('Found');
-    element.click();
+  })
+  
+}
+  
 
-});
-
-
-
-/*driver.findElement(webdriver.By.id('market_cap_defined')).then(function(market_cap_button){
-	market_cap_button.click();
-	driver.getTitle(function(title) {
-		assertEquals("Market Capitalization Defined", title);
-		assertEquals("https://www.investopedia.com/articles/basics/03/031703.asp", driver.getCurrentUrl());
-	});
-});
-*/
-// End Test 3
-
-// Test 4: Checks to see blocklist and blockdiv exists
-
-/*
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-// Goes to blocks page
-driver.get('http://localhost:8080/blocks');
-
-driver.getTitle(function(title) {
-	assertEquals("Blocks", title);
-});
-
-
-driver.findElements(webdriver.By.id("blocklist")).then(function(){
-	console.log('Success: ul list exists');
-	driver.findElements(webdriver.By.id("blockDiv")).then(function(){
-		console.log('Success: li"s for blockDiv exists')
-	})
-});
-*/
-
-//End test 4
-
-/*
-// Test 5: Checks to see blocklist and blockdiv exists
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-// Goes to blocks page
-driver.get('http://localhost:8080/transactions');
-
-driver.getTitle(function(title) {
-	assertEquals("Search Transactions", title);
-});
-
-
-driver.findElements(webdriver.By.id("transactions")).then(function(){
-	console.log('Success: ul list transactions exists');
-	driver.findElements(webdriver.By.id("txnBlockDiv")).then(function(){
-		console.log('Success: li"s for txnBlockDiv exists')
-	})
-});
-//End test 5
-*/
-
-//Test 6: 
-
-/*
-var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-
-// Goes to blocks page
-driver.get('http://localhost:8080/tokens');
-
-try{driver.getTitle(function(title) {
-	assertEquals("Tokens", title);
-})} catch(e){
-	console.log(e);
+function addResults(result, testName){
+  var resultString = 'unsuccessful'
+  if (result){
+    resultString = 'successful'
+    testResults.push(testName + ' passed');
+  } else {
+    testResults.push(testName + ' failed');
+  }
+  console.log(testName + ' was ' + resultString + '.');
 }
 
-try{driver.findElements(webdriver.By.id("tokens_table")).then(function(table){
-//try{driver.findElements(webdriver.By.className("bootstrap-table")).then(function(){
-	console.log('Success: Tokens table found');
-	var job = 0;
-
-
-driver.wait(function () {
-    driver.findElement(webdriver.By.css(".table table-hover tr[data-index='" + job + "']"));
-    driver.actions().mouseMove(el).perform();
-}, 3000);
-
-
-
-// Hovering over elements.
-	driver.findElement(webdriver.By.css("#tokens_table tr[data-index='" + job + "']")).then(function(elem){
-			driver.actions().mouseMove(elem).perform();
-			driver.sleep(5000);
-			driver.quit();
-		});
-
-})}catch (e){
-    console.log(e);
+// Searches a string instead of a number.
+function invalid_block_search(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+      try {
+        driver.get('http://localhost:8080').then(function(){
+          try{
+            driver.findElement(webdriver.By.id('searchtextbox')).then(function(element){
+            try{
+              element.sendKeys('23-3-111').then(function(){
+                driver.findElement(webdriver.By.id('searchbutton')).click();
+                driver.sleep(1000);
+                try {
+                  driver.wait(webdriver.until.alertIsPresent()).then(function(){
+                    try{
+                      driver.switchTo().alert().then(function(alert){
+                      try{alert.accept().then(function(){
+                        driver.quit();
+                        addResults(true, 'invalid_block_search()');
+                        resolve(present);
+                      })}catch(e){console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+                    });
+                    } catch(e){console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+                  })      
+                } catch(e){
+                  console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+              })
+            } catch(e){console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+          })
+        } catch(e){console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+        })  
+      } catch(e){console.log(e);addResults(false, 'invalid_block_search()');reject(present);}
+  })
 }
 
-		
+//Searches a valid number in the block search.
+function valid_block_search(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    try{
+      driver.get('http://localhost:8080').then(function(){
+        try{driver.findElement(webdriver.By.id('searchtextbox')).then(function(element){
+          try{element.sendKeys('2340').then(function(){
+            driver.findElement(webdriver.By.id('searchbutton')).click();
+            driver.wait(function() {
+                  return driver.getTitle().then(function(title) {
+                    return title === 'Search Blocks';
+                });
+            }, 5000, "Error: Page hasn't changed").then(function(){
+              try{driver.getCurrentUrl().then(function(url){
+              assert.equal("http://localhost:8080/search-blocks", url);
+              driver.quit();
+              addResults(true, 'valid_block_search()');
+              resolve(present);
+              })}catch(e){
+                console.log(e);addResults(false, 'valid_block_search()');reject(present);
+              }
+            });
+          })}catch(e){console.log(e);addResults(false, 'valid_block_search()');reject(present);}
+        })}catch(e){console.log(e);addResults(false, 'valid_block_search()');reject(present);}
+      })  
+    } catch(e){console.log(e);addResults(false, 'valid_block_search()');reject(present);}
+  })
+}
+
+// Conducts a valid txhash search
+function valid_txhash_search(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    // selects TxHash
+    try{driver.get('http://localhost:8080').then(function(){
+      driver.findElement(webdriver.By.css('.searchid > option:nth-child(2)')).then(function(element){
+        element.click();
+        //assert TxHash has been selected
+        element.getAttribute('value').then(function(value) {
+            assert.equal(value, 'TxHash');
+            driver.findElement(webdriver.By.id('searchtextbox')).then(function(search){
+            search.sendKeys('0xc7becd7bb85fd7bc2433d9f00c00820e2d09defc735b0dc537a40bb11143b937').then(function(){
+              driver.findElement(webdriver.By.id('searchbutton')).click();
+              driver.wait(function() {
+                  return driver.getTitle().then(function(title) {
+                    return title === 'Search Transactions';
+                });
+            }, 5000, "Error: Page hasn't changed").then(function(){
+                try{driver.getCurrentUrl().then(function(url){
+                assert.equal("http://localhost:8080/search-transactions", url);
+                driver.quit();
+                addResults(true, 'valid_txhash_search()');
+                resolve(present);
+                })}catch(e){
+                  console.log(e);addResults(false, 'valid_txhash_search()');reject(present);
+                }
+              });
+                          
+            })
+
+          });
+        });
+      })
+    })}catch(e){console.log(e);addResults(false, 'valid_txhash_search()');reject(present);}
+  })
+}
+
+
+// Conducts an invalid txhash search
+function invalid_txhash_search(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    // selects TxHash
+    try{driver.get('http://localhost:8080').then(function(){
+      driver.findElement(webdriver.By.css('.searchid > option:nth-child(2)')).then(function(element){
+        element.click();
+        //assert TxHash has been selected
+            driver.findElement(webdriver.By.id('searchtextbox')).then(function(search){
+            try{
+              search.sendKeys('badQuery').then(function(){
+                driver.findElement(webdriver.By.id('searchbutton')).click();
+                try {
+                  driver.wait(webdriver.until.alertIsPresent()).then(function(){
+                    try{
+                      driver.switchTo().alert().then(function(alert){
+                      try{alert.accept().then(function(){
+                        driver.quit();
+                        addResults(true, 'invalid_txhash_search()');
+                        resolve(present);
+                      })}catch(e){console.log(e);addResults(false, 'invalid_txhash_search()');reject(present);}
+                    });
+                    } catch(e){console.log(e);addResults(false, 'invalid_txhash_search()');reject(present);}
+                  })      
+                } catch(e){
+                  console.log(e);addResults(false, 'invalid_txhash_search()');reject(present);}
+              })
+            } catch(e){console.log(e);addResults(false, 'invalid_txhash_search()');reject(present);}
+
+          });
+
+      })
+    })}catch(e){console.log(e);addResults(false, 'valid_txhash_search()');reject(present);}
+  })
+}
+
+
+
+
+// Not written correctly, can't get xpath to work
+/*
+// Conducts a valid txhash search
+function homepage_links(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    try{driver.get('http://localhost:8080').then(function(){
+
+      //try{driver.findElement(webdriver.By.css('#middle-container > div > div:nth-child(1) > div > div.card-footer > a')).then(function(element){
+      try{driver.findElement(webdriver.By.xpath("//a[@href='https://www.investopedia.com/articles/basics/03/031703.asp']")).then(function(element){
+
+      //try{driver.findElementByLinkText("https://www.investopedia.com/articles/basics/03/031703.asp").then(function(element){
+        element.click();
+        console.log('home page links')
+      })}catch(e){console.log(e);addResults(false, 'homepage_links()');reject(present);}
+    })}catch(e){console.log(e);addResults(false, 'homepage_links()');reject(present);}
+  })
+}
 */
+
+
+// Makes sure the block list and div exists
+function block_div_list_exists(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    try{driver.get('http://localhost:8080/blocks').then(function(){
+      driver.getTitle(function(title) {
+        assert.equals("Blocks", title);
+      });
+    })}catch(e){console.log(e);addResults(false, 'block_div_list_exists()');reject(present);}
+    try{driver.findElements(webdriver.By.id("blocklist")).then(function(){
+      console.log('Success: ul list exists');
+      try{driver.findElements(webdriver.By.id("blockDiv")).then(function(){
+        console.log('Success: li"s for blockDiv exists')
+        driver.quit();
+        addResults(true, 'block_div_list_exists()');
+        resolve(present);
+      })}catch(e){console.log(e);addResults(false, 'block_div_list_exists()');reject(present);};
+    })}catch(e){console.log(e);addResults(false, 'block_div_list_exists()');reject(present);};
+  })
+}
+
+
+// Makes sure the txns list and div exists
+function txns_div_list_exists(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+    try{driver.get('http://localhost:8080/transactions').then(function(){
+      driver.getTitle(function(title) {
+        assert.equals("Transactions", title);
+      });
+    })}catch(e){console.log(e);addResults(false, 'txns_div_list_exists()');reject(present);}
+    try{driver.findElements(webdriver.By.id("transactions")).then(function(){
+      console.log('Success: ul list exists');
+      try{driver.findElements(webdriver.By.id("txnBlockDiv")).then(function(){
+        console.log('Success: li"s for txnBlockDiv exists')
+        driver.quit();
+        addResults(true, 'txns_div_list_exists()');
+        resolve(present);
+      })}catch(e){console.log(e);addResults(false, 'txns_div_list_exists()');reject(present);};
+    })}catch(e){console.log(e);addResults(false, 'txns_div_list_exists()');reject(present);};
+  })
+}
+
+
+function tokens_table_exists(callback){
+  return new Promise(function(resolve, reject){
+    var driver = new webdriver.Builder()
+      .forBrowser('chrome')
+      .build();
+      var present = false;
+      try{driver.get('http://localhost:8080/tokens').then(function(){
+      try{driver.getTitle(function(title) {
+        assert.equals("Tokens", title);
+      })} catch(e){
+        console.log(e);
+      }
+      try{driver.findElements(webdriver.By.id("tokens_table")).then(function(table){
+        console.log('Success: Tokens table found');
+        driver.quit();
+        /*
+        driver.findElement(webdriver.By.css('#table')).then(function(elem){
+          driver.actions().mouseMove(elem).perform();
+          driver.sleep(5000);
+          //driver.quit();
+        });
+*/
+        addResults(true, 'tokens_table_exists()');
+        resolve(present);
+
+        })}catch (e){
+            console.log(e);
+        }       
+      })}catch(e){
+        console.log(e);addResults(false, 'tokens_table_exists()');reject(present);
+      }
+  })
+}
+
 
 
 var PORT = config.get('ethos.config.port');
