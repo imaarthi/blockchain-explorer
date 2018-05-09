@@ -17,21 +17,20 @@ var mocha = require('mocha')
 var chai = require('chai')
 require('webdriverjs-helper');
 
+// global variable to keep track of test results
 var testResults = [];
-
-// Source: https://stackoverflow.com/questions/39069396/selenium-webdriver-node-js
 
  var webdriver = require('selenium-webdriver');
  var mocha = require('mocha')
  var assert = require('assert');
  var chai = require('chai');
 
- 
+ // Runs all the tests
 run_tests();
+
 function run_tests(){
   //To run a singular test, just call a function like so:
   //invalid_txhash_search()
-
 
   invalid_block_search().then(function() {
     valid_block_search().then(function(){
@@ -53,7 +52,7 @@ function run_tests(){
   
 }
   
-
+// Stores the test result in a string format to testResults.
 function addResults(result, testName){
   var resultString = 'unsuccessful'
   if (result){
@@ -65,7 +64,7 @@ function addResults(result, testName){
   console.log(testName + ' was ' + resultString + '.');
 }
 
-// Searches a string instead of a number.
+// Searches a string instead of a number. Displays an alert and then it resolves it.
 function invalid_block_search(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -103,7 +102,7 @@ function invalid_block_search(callback){
   })
 }
 
-//Searches a valid number in the block search.
+//Searches a valid number in the block search. Checks to see it goes to the right page.
 function valid_block_search(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -136,7 +135,7 @@ function valid_block_search(callback){
   })
 }
 
-// Conducts a valid txhash search
+// Conducts a valid txhash search. 
 function valid_txhash_search(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -178,7 +177,7 @@ function valid_txhash_search(callback){
 }
 
 
-// Conducts an invalid txhash search
+// Conducts an invalid txhash search. 
 function invalid_txhash_search(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -245,7 +244,7 @@ function homepage_links(callback){
 */
 
 
-// Makes sure the block list and div exists
+// Makes sure the block list and div exists on the blocks page. 
 function block_div_list_exists(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -270,7 +269,7 @@ function block_div_list_exists(callback){
 }
 
 
-// Makes sure the txns list and div exists
+// Makes sure the list and div exists on transactions page.
 function txns_div_list_exists(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()
@@ -294,7 +293,7 @@ function txns_div_list_exists(callback){
   })
 }
 
-
+// Makes sure the table exists on the tokens page.
 function tokens_table_exists(callback){
   return new Promise(function(resolve, reject){
     var driver = new webdriver.Builder()

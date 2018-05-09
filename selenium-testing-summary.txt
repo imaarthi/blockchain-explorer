@@ -1,0 +1,22 @@
+Note from Erica: Between the day I turned in lab 9 and the presentation, I made changes to the tests to run them more sequentially. 
+
+testResults is a global array that stores strings indicating the result of each test. After all tests have been run, testResults is printed to summarize the results.
+
+Whenever the server starts, run_tests() is called. Within this function, each test is executed in sequence. Another test only starts when the previous one has finished executing.
+
+------TESTS------
+Invalid block search: Searches a string instead of a number. Displays an alert and then it resolves it.
+
+Valid block search: Searches a valid number in the block search. Checks to see it goes to the blocks page.
+
+Valid txhash search: Searches a valid transaction number in the transactions search. Checks to see if it goes to the transactions page. 
+
+Invalid txhash search: Searches an invalid query in the transactions search. Displays an alert and resolves it.
+
+block_div_list_exists: Makes sure the block list and div exists on the blocks page. 
+
+txns_div_list_exists: Makes sure the list and div exists on transactions page.
+
+tokens_table_exists: Makes sure the table exists on the tokens page.
+
+homepage_links: Couldn't write the test because I couldn't locate the Bootstrap button using xpath().
